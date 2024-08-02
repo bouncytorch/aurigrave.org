@@ -128,3 +128,13 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Repo privates
+config.yml
+modules/endpoints/*
+!modules/endpoints/example.ts
+templater
+static
+build
+logs
+ssl
