@@ -40,8 +40,9 @@ app
 	});
 
 // the following is some shit i made so every api endpoint submodule is dynamically imported. for future code explorers, would appreciate feedback on this
+// also yeah TODO: type "default"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const endpoints = Object.assign({}, ...fs.readdirSync(__dirname + '/modules/endpoints', { withFileTypes: true }).map(({ name }) => (require(`./modules/endpoints/${name.replace('.ts', '')}`) as { default: unknown }).default));
+const endpoints = Object.assign({}, ...fs.readdirSync(path.join(__dirname, '/modules/endpoints'), { withFileTypes: true }).map(({ name }) => (require(`./modules/endpoints/${name.replace('.ts', '')}`) as { default: unknown }).default));
 Object.entries(endpoints).forEach(([path, methods]) => 
 	Object.entries(methods as { [key: string]: (req: Request, res: Response, next: NextFunction) => unknown }).forEach(([name, func]) => 
 		app[name as ('get' | 'post' | 'delete' | 'put' | 'use')](path, func)));
@@ -49,8 +50,9 @@ Object.entries(endpoints).forEach(([path, methods]) =>
 if (config.templater.enabled) {
 	app.engine('handlebars', engine())
 		.set('view engine', 'handlebars')
-		.set('views', './views');
+		.set('views', config.templater.views);
 	
+	fs.readdirSync(config.templater.views)
 }
 
 app.listen(config.port);
