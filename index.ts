@@ -4,6 +4,7 @@ import { engine } from 'express-handlebars';
 import chalk from 'chalk';
 import 'dotenv/config';
 import fs from 'fs';
+import path from 'path';
 
 process.on('uncaughtException', (err) => {
 	if (process.argv.indexOf('-e')) return console.log(err.stack);
@@ -20,12 +21,7 @@ declare module 'express-serve-static-core' { interface Response {
 const app = express();
 
 app
-	.engine('handlebars', engine())
-	
-	.set('view engine', 'handlebars')
-	.set('views', './views')
-
-	.use(config.static.url, express.static(config.static.path))
+	.use(config.static.url, express.static(config.static.path, { extensions: ['html', 'htm']}))
 
 	.use((req, res, next) => { 
 		res.tmplt = (name, vars, head) => res.render('template', {
@@ -50,7 +46,12 @@ Object.entries(endpoints).forEach(([path, methods]) =>
 	Object.entries(methods as { [key: string]: (req: Request, res: Response, next: NextFunction) => unknown }).forEach(([name, func]) => 
 		app[name as ('get' | 'post' | 'delete' | 'put' | 'use')](path, func)));
 
-
+if (config.templater.enabled) {
+	app.engine('handlebars', engine())
+		.set('view engine', 'handlebars')
+		.set('views', './views');
+	
+}
 
 app.listen(config.port);
 
