@@ -27,6 +27,9 @@ export type Config = {
 		sub?: string
 		seo: string
 		pages: string
+		url: string
+		url_page: string
+		template: string
 		thumbnail: string
 	}
 	https: {
@@ -63,6 +66,9 @@ declare global {
 			BLOG_SUB: string
 			BLOG_SEO: string
 			BLOG_PAGES: string
+			BLOG_URL: string
+			BLOG_URL_PAGE: string
+			BLOG_TEMPLATE: string
 			BLOG_THUMBNAIL: string
 			HTTPS_ENABLED: string
 			HTTPS_PATHS_CA: string

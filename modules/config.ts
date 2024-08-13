@@ -8,47 +8,51 @@ import Log from './logs';
 
 let config: Config;
 const $ = process.env,
-	log = new Log('config', 'simple'),
+	log = new Log('[config] ', 'simple'),
 	// why? because yml is fucking awesome
 	config_default = `# NOTE: If a submodule in this config has a toggle (an on/off switch, is either "enable" or "level" in the case of logs), 
 # if you disable it you can shave off the rest of submodule parameters to save visual space in the config
 
 port: 80                         # [number] HTTP port
 logs:                            # Logging options
-  level:      'simple'              # [string]    Log level. Can be: verbose, simple, off/null
-  savetofile: true                  # [boolean]   Save to file toggle
-  extension:  '.log'                # [extension] Log file extension (regardless of extension will still be a text file)
-  path:       './logs'              # [path]      Path to save log files to
-  format:     'log-DD.MM.YYYY'      # [date]      Log file naming format: https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
+  level:      'simple'              # [string|null] Logging level
+  savetofile: true                  # [boolean]     Toggle for saving console logs to files
+  extension:  '.log'                # [string]      Log file extension
+  path:       './logs'              # [path]        Path to which to save the log files
+  format:     'log-DD.MM.YYYY'      # [date]        Log file naming format. For date symbols, visit https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
 static:                           # Static configuration
-  path: './static'                  # [path]      Static location on disk (path)
-  url:  '/'                         # [url]       Static url, served to the templater for use with the rendered page
-                                    # WARNING: If you don't use templater and only serve static pages be wary that if you set this url to anything 
-                                    #          but the default value your pages root will be at that address. 
-                                    #          F.e. if you set it to "/assets" all the files in your static folder will be served like http://example.com/assets/*, including the web pages: http://example.com/index.html
-                                    #          "How do I separate my HTML pages from my sites assets?". Without changing the default value, in your local static folder (located at the static.path you defined)
-                                    #          create a folder called "assets". Put your images, fonts, css and stuff like that in there and there you go! you can now separate your assets and pages.
-                                    #          This works at any depth, depending on your system's limits. However, do consider how long your URL will be when your file is served: https://stackoverflow.com/questions/417142/what-is-the-maximum-length-of-a-url-in-different-browsers
-templater:                        # Handlebars templater options
-  enabled: false                    # [boolean]   Templater toggle. If false, you'll need to store your .html pages in the static folder
-                                    # NOTE: Templater pages currently work only if you create an according endpoint and manually assign an express endpoint to serve it.
-                                    #       I am hoping to make it similarly easy to set up as a static site
-                                    # WARNING: If you're mixing templater with static html pages, templater will override static in case the pages are on the identical path
-  wrapper: './views/template.hbs'   # [path]      SEO wrapper template location
-  views: './views'	                # [path]      Templater views location
-  seo:                              # SEO defaults. If you don't know what this is, search for "meta tags"
+  path: './static'                  # [path]        Static location on disk (path)
+  url:  '/'                         # [url]         Static url, served to the templater for use with the rendered page
+templater:                        # Templater options
+  enabled: true                     # [boolean]     Templater toggle
+  views: './views'                  # [path]        Path to templater views
+  wrapper: './views/template.ejs'   # [path]        Path to templater wrapper
+seo:                              # SEO options for templater
+  default:                            # SEO defaults. If you don't know what this is, search for "meta tags"
     type: 'website'                   # [string]    Page type
     title: 'bouncytorch'              # [string]    Page title
     description: 'bouncytorch - Electronic, Orchestral and World music, immature film, audio and sound design studies, web and game development discussions and updates.' 
                                       # [string]    Page description
     image: '/images/seo/default.webp' # [url]       Default page link thumbnail image (NOTE: this is relative to static.url)
+	
 blog:                             # Blog engine options
   enabled: false                    # [boolean]     Blog engine toggle
   seo: './static/images/seo/blog'   # [path]        Path, to which render blog embed images
   pages: './blog'                   # [path]        Location for blog pages in .md format
+  sub: 'blog'                       # [string]      Blog subdomain. If set to a string, will only return blog pages on that subdomain
+  url: '/'                          # [url]         Url at which to serve blog index (the list of all the blog posts). Can not be null
+  url_page: '/'                     # [url]         Url at which to serve blog pages (is more of a prefix). Can not be null
+                                    # NOTE: Here's a couple examples of using the three above:
+                                    #       1. If you set sub: null, url: '/blog' and url_page: '/', your blog index will be available at "domain.com/blog", and each post at "domain.com/blog/<postname>"
+                                    #       2. If you set sub: 'blog', url: '/', url_page: '/post', your blog index will be available at "blog.domain.com", and each post at "blog.domain.com/post/<postname>"
+                                    #       3. If you set sub: null, url: '/' and url_page: '/post', your blog index will be available at "domain.com", and each post at "domain.com/post/<postname>"
+                                    #       If you wish your site to have a blog and nothing else, you'd want to choose option 3. 
+                                    #       If you wish your site to serve your blog at a separate subdomain, pick option 2.
+                                    #       If you don't want to fiddle with subdomains, you ought to use option 1.
+  template: './blog/template.hbs'   # [path]        Blog page template. Doesn't depend on templater options
   thumbnail: './blog/thumbnail.hbs' # [path]        Blog meta image template. Modify if you wish to change the thumbnail styling
 https:                            # SSL options
-  enabled: true                     # [boolean]   HTTPS toggle
+  enabled: false                    # [boolean]   HTTPS toggle
   port: 443                         # [number]    HTTPS port
   paths:                            # SSL paths
     ca: './ssl/ca.pem'                # [path]      Chain
@@ -85,6 +89,9 @@ function envToConfig(): Config {
 			sub: $.BLOG_SUB,
 			seo: $.BLOG_SEO,
 			pages: $.BLOG_PAGES,
+			url: $.BLOG_URL,
+			url_page: $.BLOG_URL_PAGE,
+			template: $.BLOG_TEMPLATE,
 			thumbnail: $.BLOG_THUMBNAIL
 		},
 		https: {
@@ -118,9 +125,10 @@ function isConfig(c: any): c is Config {
 
 		blog && (blog.enabled === false || (blog.enabled === true && typeof blog.seo === 'string' &&
 			typeof blog.pages === 'string' && typeof blog.thumbnail === 'string' &&
+			typeof blog.url_page === 'string' && typeof blog.template == 'string' &&
 			(blog.sub === undefined || typeof blog.sub === 'string'))) &&
 
-		https && (https.enabled === false || (https.enables === true && https.paths &&
+		https && (https.enabled === false || (https.enabled === true && https.paths &&
 		typeof https.paths.ca === 'string' && typeof https.paths.cert === 'string' &&
 		typeof https.paths.key === 'string'));
 }
@@ -148,6 +156,7 @@ if (!fs.existsSync(config.static.path) || !fs.lstatSync(config.static.path).isDi
 if (config.templater.enabled && (!fs.existsSync(config.templater.wrapper) || !fs.lstatSync(config.templater.wrapper))) throw new Error('Templater wrapper does not exist. Pages can\'t be rendered without a wrapper');
 if (config.templater.enabled && (!fs.existsSync(config.templater.views) || !fs.lstatSync(config.templater.views).isDirectory())) throw new Error('Views path invalid/doesn\'t exist');
 if (config.blog.enabled && ((!fs.existsSync(config.blog.pages) || !fs.lstatSync(config.blog.pages).isDirectory()))) log.warn('Blog pages path invalid/doesn\'t exist. Your blog will not have any posts');
+if (config.blog.enabled && ((!fs.existsSync(config.blog.template) || !fs.lstatSync(config.blog.template).isDirectory()))) throw new Error('Blog template invalid/doesn\'t exist. Blog pages can\'t be rendered');
 if (config.https.enabled && ((!fs.existsSync(config.https.paths.ca) || !fs.lstatSync(config.https.paths.ca).isFile()))) throw new Error('Your SSL CA file is invalid');
 if (config.https.enabled && ((!fs.existsSync(config.https.paths.cert) || !fs.lstatSync(config.https.paths.cert).isFile()))) throw new Error('Your SSL cert file is invalid');
 if (config.https.enabled && ((!fs.existsSync(config.https.paths.key) || !fs.lstatSync(config.https.paths.key).isFile()))) throw new Error('Your SSL key file is invalid');

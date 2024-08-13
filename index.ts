@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
 import https from 'https';
-import { engine } from 'express-handlebars';
 import chalk from 'chalk';
 import 'dotenv/config';
 import fs from 'fs';
@@ -8,7 +7,7 @@ import path from 'path';
 
 process.on('uncaughtException', (err) => {
 	if (process.argv.indexOf('-e')) return console.log(err.stack);
-	console.log(chalk`{red [EXCEPTION] ${err}}`);
+	console.log(chalk`{red [exception] ${err}}`);
 })
 
 import config from './modules/config';
@@ -48,11 +47,13 @@ Object.entries(endpoints).forEach(([path, methods]) =>
 		app[name as ('get' | 'post' | 'delete' | 'put' | 'use')](path, func)));
 
 if (config.templater.enabled) {
-	app.engine('handlebars', engine())
-		.set('view engine', 'handlebars')
+	app.set('view engine', 'ejs')
 		.set('views', config.templater.views);
 	
-	fs.readdirSync(config.templater.views)
+	fs.readdirSync(config.templater.views, { recursive: true }).forEach((name) => {
+		if (name === path.relative(config.templater.views, config.templater.wrapper)) return;
+		
+	});
 }
 
 app.listen(config.port);
