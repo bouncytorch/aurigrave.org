@@ -1,0 +1,11 @@
+node_modules
+.git
+.gitignore
+out
+
+endpoints/**/*
+static/**/*
+views/**/*
+
+!endpoints/example.js
+!endpoints/template.ejs

@@ -137,3 +137,10 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+static/**/*
+views/**/*
+endpoints/**/*
+
+!endpoints/example.js
+!endpoints/template.ejs
