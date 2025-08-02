@@ -22,7 +22,7 @@ An endpoint .js file must have a default member export containing a JS object wi
     - `get: (req, res, next) => ...` - endpoint method and an express routing handler. The method name can be HTTP method + express'es "all" method, which handles all incoming methods.
     *(NOTE: The method name is case-insensitive. The type of the "express routing handler" is as following: `(req: express.Request, res: express.Response, next: express.NextFunction) => void`.)*
 
-### Q&A
+### FAQ
 ##### Is there a reason it's so overcomplicated?
 No. This is but a simple challenge I set for myself to make as a summer project in 2024. After focusing on education for a while, I decided to pick this back up in 2025, keeping the original idea but dumbing it down to everything essential.
 
