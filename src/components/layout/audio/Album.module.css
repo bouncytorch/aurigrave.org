@@ -1,0 +1,18 @@
+.albumLink {
+    text-decoration: none;
+    color: inherit;
+}
+
+.album {
+    border: none;
+    padding: 5px;
+    background: var(--background-tinted);
+    flex-direction: column;
+    width: min-content;
+    display: flex;
+    gap: 0.5em;
+    padding-bottom: 0.4em;
+    align-items: center;
+    border-radius: 0.5em;
+    overflow: hidden;
+}

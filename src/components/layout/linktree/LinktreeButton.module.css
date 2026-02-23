@@ -1,0 +1,11 @@
+.linktree-link {
+    text-decoration: none;
+}
+
+.linktree-button {
+    font-size: 0.9em;
+    flex-direction: row;
+    display: flex;
+    gap: 0.3em;
+    align-items: center;
+}

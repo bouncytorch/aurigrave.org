@@ -1,11 +1,4 @@
 node_modules
+.next
 .git
-.gitignore
-out
-
-endpoints/**/*
-static/**/*
-views/**/*
-
-!endpoints/example.js
-!endpoints/template.ejs
+*.md

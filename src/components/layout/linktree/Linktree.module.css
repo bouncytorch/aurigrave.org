@@ -1,0 +1,7 @@
+.linktree {
+    flex-flow: wrap;
+    gap: 0.3em;
+    display: flex;
+    justify-content: center;
+    max-width: 400px;
+}

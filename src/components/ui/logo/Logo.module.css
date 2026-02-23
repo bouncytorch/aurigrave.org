@@ -1,0 +1,7 @@
+:global(.light) .nav-logo {
+    fill: black;
+}
+
+:global(.dark) .nav-logo {
+    fill: white;
+}

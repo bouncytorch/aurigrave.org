@@ -1,0 +1,130 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.transitions-enabled * {
+  transition:
+    color            0.1s linear,
+    background-color 0.1s linear,
+    fill             0.1s linear,
+    scale            0.05s linear,
+    border-color     0.1s linear;
+}
+
+:root {
+  --font-size: 18px;
+  --font-weight: 200;
+  --body-max-width: 975px;
+}
+
+.light {
+  --backdrop-image: radial-gradient(#ffffff70, #000000ba), url('/mount_ararat.webp');
+  --backdrop-blend: normal;
+  --backdrop-tint: #fff;
+  --background-color: #e0e0e0;
+  --background-tinted: #dfdfdf;
+  --background-inverted: #000;
+	--background-alpha: #eeeeee5e;
+	--stroke: #000;
+  --stroke-inverted: #fff;
+  --link: #263a53;
+  --link-visited: #462653;
+}
+
+.dark {
+  --backdrop-image: radial-gradient(circle, #00000000, #0000009f), url('/mount_ararat.webp');
+  --backdrop-blend: multiply;
+  --backdrop-tint: #2F2F2F;
+  --background-color: #181818;
+  --background-tinted: #2c2c2c;
+  --background-alpha: #16161650;
+  --background-inverted: #fff;
+  --stroke: #fff;
+  --stroke-inverted: #000;
+  --link: #96c4ff;
+  --link-visited: #ad96ff;
+}
+
+html {
+  background-color: var(--backdrop-tint);
+  background-image: var(--backdrop-image);
+  background-blend-mode: var(--backdrop-blend);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  position: relative;
+}
+
+body {
+  margin: 0 auto;
+  font-weight: var(--font-weight);
+  font-size: var(--font-size);
+  color: var(--stroke);
+  font-family: var(--font);
+  min-height: 100vh;
+
+}
+
+p {
+  padding: 0.3rem 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  padding-bottom: 0.5rem;
+  font-weight: 900;
+}
+
+a {
+  color: var(--link);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+input {
+  margin: 0 0.2em;
+}
+
+button, input[type='button'] {
+  color: var(--stroke);
+  font-family: var(--font);
+  font-size: 1em;
+  font-weight: var(--font-weight);
+  background: none;
+  border-color: var(--stroke);
+  padding: 0.4em 0.6em;
+  border: 0.05em dashed var(--stroke);
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled), input[type='button']:hover:not(:disabled) {
+  background-color: var(--background-inverted);
+  color: var(--stroke-inverted);
+}
+
+button:active:hover:not(:disabled), input[type='button']:active:hover:not(:disabled) {
+  scale: 0.9;
+}
+
+button:disabled, input[type='button']:disabled {
+  opacity: 0.5;
+  cursor:default;
+}
+
+input[type='checkbox'] {
+  /* TODO: style the checkbox */
+  /* appearance: none;
+  background: var(--background-tinted); */
+  width: 1.5em;
+  height: 1.5em;
+}
+
+footer {
+  font-size: 0.9em;
+  opacity: 0.6;
+}

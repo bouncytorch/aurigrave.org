@@ -1,0 +1,23 @@
+.wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display:flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.body {
+    background: var(--background-alpha);
+    background-blend-mode: var(--backdrop-blend);
+    backdrop-filter: blur(10px);
+    border-radius: 1em;
+    padding: 3rem 2rem;
+}
+
+.main {
+    display: flex;
+    gap: 0.3em;
+    flex-direction: column;
+    align-items: center;
+}

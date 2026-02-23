@@ -1,29 +1,36 @@
-# aurigrave.org Source
-This is the source "bones" of the aurigrave.org website. It only includes the base files - the underlying "engine" (a simple express app).
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-### Roadmap:
-- [x] Dynamic HTTP routing system
-- [ ] Templater system based on EJS
-- [ ] Blog system based on Markdown format
-- [ ] Granular configuration for all of the above
+## Getting Started
 
-### How to use the dynamic routing system
-To create custom express endpoints you need to create a JavaScript ES module file in .js format in the /endpoints folder situated in the current working directory of the program. Here's an example:
-```js
-export default {
-    "/example": {
-        get: (req, res) =>
-            res.send("You have reached this web page by typing \"example.com\", \"example.net\", or \"example.org\" into your web browser.<br><br>These domain names are reserved for use in documentation and are not available for registration. See <a href=\"https://www.rfc-editor.org/rfc/rfc2606.txt\">RFC 2606</a>, Section 3.")
-    }
-};
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
-An endpoint .js file must have a default member export containing a JS object with the following hierarchy:
-- `"/example"` - endpoint's full HTTP path. *(NOTE: this is case sensitive)*
-    - `get: (req, res, next) => ...` - endpoint method and an express routing handler. The method name can be HTTP method + express'es "all" method, which handles all incoming methods.
-    *(NOTE: The method name is case-insensitive. The type of the "express routing handler" is as following: `(req: express.Request, res: express.Response, next: express.NextFunction) => void`.)*
 
-### FAQ
-##### Is there a reason it's so overcomplicated?
-No. This is but a simple challenge I set for myself to make as a summer project in 2024. After focusing on education for a while, I decided to pick this back up in 2025, keeping the original idea but dumbing it down to everything essential.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-This project is just a showcase of my abilities as a sole manager and developer of a codebase, but *(in the future)* it also might hold practical value to people who want to spin up a quick express server without having to dabble in backend.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
