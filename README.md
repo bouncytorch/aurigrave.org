@@ -11,6 +11,7 @@ This repository contains the source code for https://aurigrave.org.
 *   **PostgreSQL**: Robust relational database for data storage.
 *   **Docker & Docker Compose**: Containerization for consistent development and deployment environments.
 *   **Sequelize**: ORM for simplified database interaction.
+*   **CI/CD**: Github Actions integration.
 
 ## Running
 
