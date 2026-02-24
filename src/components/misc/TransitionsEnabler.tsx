@@ -2,9 +2,9 @@
 import { useEffect } from 'react';
 
 export default function TransitionsEnabler() {
-  useEffect(() => {
-    document.body.classList.add('transitions-enabled');
-  }, []);
+    useEffect(() => {
+        document.body.classList.add('transitions-enabled');
+    }, []);
 
-  return null;
+    return null;
 }

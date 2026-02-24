@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "migrate:create": "sequelize-cli migration:create --migrations-path src/lib/db/migrations",
+    "migrate:up": "sequelize-cli db:migrate",
+    "migrate:down": "sequelize-cli db:migrate:undo",
+    "migrate:status": "sequelize-cli db:migrate:status"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -15,13 +19,21 @@
     "@fortawesome/react-fontawesome": "^3.2.0",
     "next": "16.1.6",
     "next-themes": "^0.4.6",
+    "pg": "^8.18.0",
+    "pg-hstore": "^2.3.4",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.5",
+    "server-only": "^0.0.1",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@stylistic/eslint-plugin": "^5.9.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.3.1",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "typescript": "^5"

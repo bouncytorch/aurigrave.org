@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import LinktreeButton from '@/components/layout/linktree/LinktreeButton'
+import LinktreeButton from '@/components/ui/button/LinktreeButton';
 
 import style from './Linktree.module.css';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -15,5 +15,5 @@ export default function Linktree({ links }: { links: Link[] }) {
         { links.map((link) => (
             <LinktreeButton key={link.link} label={link.name} href={link.link} icon={link.icon} />
         )) }
-    </div>
+    </div>;
 }

@@ -11,5 +11,5 @@ export default function YouTubeFrame({ link }: { link: string }) {
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
         ></iframe>
-    </div>
+    </div>;
 }

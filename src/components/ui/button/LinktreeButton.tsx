@@ -8,8 +8,8 @@ export default function LinktreeButton({ label, href, icon, disabled = false }: 
     const btn = <button className={style['linktree-button']}>
         <FontAwesomeIcon icon={icon} />
         <span>{ label }</span>
-    </button>
+    </button>;
 
-    if (disabled) return btn
-    else return <a href={href} className={style['linktree-link']}>{btn}</a>
+    if (disabled) return btn;
+    else return <a href={href} className={style['linktree-link']}>{btn}</a>;
 }

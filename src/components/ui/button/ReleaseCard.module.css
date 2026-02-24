@@ -1,9 +1,9 @@
-.albumLink {
+.releaseCardLink {
     text-decoration: none;
     color: inherit;
 }
 
-.album {
+.releaseCard {
     border: none;
     padding: 5px;
     background: var(--background-tinted);

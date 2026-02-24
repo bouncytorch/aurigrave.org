@@ -1,0 +1,7 @@
+.releaseCardList {
+    display: flex;
+    gap: 0.4em;
+    flex-wrap: wrap;
+    padding-bottom: 1em;
+    justify-content: space-evenly;
+}
