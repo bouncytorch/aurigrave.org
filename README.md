@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# aurigrave.org Source
 
-## Getting Started
+This repository contains the source code for https://aurigrave.org.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+*   **Next.js**: Modern React framework for building performant web applications.
+*   **PostgreSQL**: Robust relational database for data storage.
+*   **Docker & Docker Compose**: Containerization for consistent development and deployment environments.
+*   **Sequelize**: ORM for simplified database interaction.
+
+## Running
+
+### Prerequisites
+
+*   [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
+*   A `.env` file in the project root (see below)
+
+### Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+DB_NAME=aurigraveorg
+DB_USER=aurigrave
+DB_PASSWORD=your_password
+PORT=3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Clone the repo and start all services locally with hot-reload:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git clone https://github.com/bouncytorch/aurigrave.org
+cd aurigrave.org
+docker compose up --build
+```
 
-## Learn More
+The app will be available at `http://localhost:3000`.
 
-To learn more about Next.js, take a look at the following resources:
+> The `migrate` service will automatically run pending database migrations before the app starts.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Production
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Uses pre-built images from Docker Hub. Pull and start with:
 
-## Deploy on Vercel
+```bash
+docker compose -f docker-compose.prod.yml up -d
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*   `db/`: Database migrations and configuration.
+*   `public/`: Static assets.
+*   `src/`: Application source code, including Next.js pages, components, and utility functions.
+    *   `src/app/`: Next.js application routes and pages.
+    *   `src/components/`: Reusable React components.
+    *   `src/lib/`: Utility functions and database connection logic.
+    *   `src/models/`: Sequelize models defining database schemas.
+
+## Available Scripts
+
+In the project directory, you can run:
+
+*   `pnpm dev`: Runs the app in development mode.
+*   `pnpm build`: Builds the application for production.
+*   `pnpm start`: Starts the production-built application.
+*   `pnpm lint`: Runs ESLint for code quality analysis.
+*   `pnpm migrate:create`: Creates a new database migration.
+*   `pnpm migrate:up`: Applies pending database migrations.
+*   `pnpm migrate:down`: Reverts the last database migration.
+*   `pnpm migrate:status`: Shows the status of database migrations.
