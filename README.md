@@ -2,6 +2,9 @@
 
 This repository contains the source code for https://aurigrave.org.
 
+<img width="843" height="919" alt="screencapture-aurigrave-org-2026-02-24-21_16_18" src="https://github.com/user-attachments/assets/3268fee3-695a-4102-a02e-762da11c64ac" />
+
+
 ## Features
 
 *   **Next.js**: Modern React framework for building performant web applications.
