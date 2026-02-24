@@ -1,0 +1,6 @@
+.main {
+    margin: auto;
+    padding: 1rem;
+    max-width: var(--body-max-width);
+    background: linear-gradient(90deg,var(--background-alpha) 0%, var(--background-color) 50%, var(--background-alpha) 100%);
+}

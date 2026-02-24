@@ -1,29 +1,73 @@
 # aurigrave.org Source
-This is the source "bones" of the aurigrave.org website. It only includes the base files - the underlying "engine" (a simple express app).
 
-### Roadmap:
-- [x] Dynamic HTTP routing system
-- [ ] Templater system based on EJS
-- [ ] Blog system based on Markdown format
-- [ ] Granular configuration for all of the above
+This repository contains the source code for https://aurigrave.org.
 
-### How to use the dynamic routing system
-To create custom express endpoints you need to create a JavaScript ES module file in .js format in the /endpoints folder situated in the current working directory of the program. Here's an example:
-```js
-export default {
-    "/example": {
-        get: (req, res) =>
-            res.send("You have reached this web page by typing \"example.com\", \"example.net\", or \"example.org\" into your web browser.<br><br>These domain names are reserved for use in documentation and are not available for registration. See <a href=\"https://www.rfc-editor.org/rfc/rfc2606.txt\">RFC 2606</a>, Section 3.")
-    }
-};
+## Features
+
+*   **Next.js**: Modern React framework for building performant web applications.
+*   **PostgreSQL**: Robust relational database for data storage.
+*   **Docker & Docker Compose**: Containerization for consistent development and deployment environments.
+*   **Sequelize**: ORM for simplified database interaction.
+
+## Running
+
+### Prerequisites
+
+*   [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
+*   A `.env` file in the project root (see below)
+
+### Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+DB_NAME=aurigraveorg
+DB_USER=aurigrave
+DB_PASSWORD=your_password
+PORT=3000
 ```
-An endpoint .js file must have a default member export containing a JS object with the following hierarchy:
-- `"/example"` - endpoint's full HTTP path. *(NOTE: this is case sensitive)*
-    - `get: (req, res, next) => ...` - endpoint method and an express routing handler. The method name can be HTTP method + express'es "all" method, which handles all incoming methods.
-    *(NOTE: The method name is case-insensitive. The type of the "express routing handler" is as following: `(req: express.Request, res: express.Response, next: express.NextFunction) => void`.)*
 
-### FAQ
-##### Is there a reason it's so overcomplicated?
-No. This is but a simple challenge I set for myself to make as a summer project in 2024. After focusing on education for a while, I decided to pick this back up in 2025, keeping the original idea but dumbing it down to everything essential.
+### Development
 
-This project is just a showcase of my abilities as a sole manager and developer of a codebase, but *(in the future)* it also might hold practical value to people who want to spin up a quick express server without having to dabble in backend.
+Clone the repo and start all services locally with hot-reload:
+
+```bash
+git clone https://github.com/bouncytorch/aurigrave.org
+cd aurigrave.org
+docker compose up --build
+```
+
+The app will be available at `http://localhost:3000`.
+
+> The `migrate` service will automatically run pending database migrations before the app starts.
+
+### Production
+
+Uses pre-built images from Docker Hub. Pull and start with:
+
+```bash
+docker compose -f docker-compose.prod.yml up -d
+```
+
+## Project Structure
+
+*   `db/`: Database migrations and configuration.
+*   `public/`: Static assets.
+*   `src/`: Application source code, including Next.js pages, components, and utility functions.
+    *   `src/app/`: Next.js application routes and pages.
+    *   `src/components/`: Reusable React components.
+    *   `src/lib/`: Utility functions and database connection logic.
+    *   `src/models/`: Sequelize models defining database schemas.
+
+## Available Scripts
+
+In the project directory, you can run:
+
+*   `pnpm dev`: Runs the app in development mode.
+*   `pnpm build`: Builds the application for production.
+*   `pnpm start`: Starts the production-built application.
+*   `pnpm lint`: Runs ESLint for code quality analysis.
+*   `pnpm migrate:create`: Creates a new database migration.
+*   `pnpm migrate:up`: Applies pending database migrations.
+*   `pnpm migrate:down`: Reverts the last database migration.
+*   `pnpm migrate:status`: Shows the status of database migrations.
