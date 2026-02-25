@@ -68,7 +68,7 @@ async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
                 justifyContent: 'center',
                 flexWrap: 'wrap'
             }}>
-                <CoverImage src={release.cover_url} alt={`${release.name} cover.`} size={400} style={{ maxWidth: '400px' }} />
+                <CoverImage src={release.cover_url} alt={`${release.name} cover.`} size={400} style={{ filter: 'drop-shadow(0px 9px 14px #000000ce)', maxWidth: '400px' }} />
                 <div style={{flex:'1', minWidth: '280px'}}>
                     <div style={{display:'flex',flexDirection:'column', gap: '1em', alignItems: 'center'}}>
                         { !!release.sample_urls.length && <>

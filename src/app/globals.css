@@ -6,7 +6,7 @@
 
 .transitions-enabled * {
   transition:
-    color            0.1s linear,
+    color            0.01s linear,
     background-color 0.1s linear,
     fill             0.1s linear,
     scale            0.05s linear,
@@ -19,7 +19,7 @@
   --body-max-width: 975px;
 }
 
-.light {
+:root {
   --backdrop-image: radial-gradient(#ffffff70, #000000ba), url('/mount_ararat.webp');
   --backdrop-blend: normal;
   --backdrop-tint: #fff;
