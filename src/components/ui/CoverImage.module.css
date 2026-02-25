@@ -1,0 +1,20 @@
+.cover {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 0;
+    position: relative;
+}
+
+.coverPlaceholder {
+    position: absolute;
+    inset: 0;
+}
+
+:global(.dark) :not(:hover) .coverPlaceholder {
+    color: #3B3B3B;
+}
+
+:global(.light) :not(:hover) .coverPlaceholder {
+    color: #FFFFFF;
+}

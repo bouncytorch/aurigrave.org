@@ -1,23 +1,33 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
 import sequelize from '@/lib/db';
 
+// TODO: DONT FORGET ABOUT THE MIGRATION
 export enum ReleaseType {
-    Game = 'game',
-    Film = 'film',
-    SFX  = 'sfx'
+    Game   = 'game',
+    Film   = 'film',
+    SFX    = 'sfx',
+    Legacy = 'legacy'
+}
+
+export enum ReleaseSize {
+    Album  = 'album',
+    EP     = 'ep',
+    Single = 'single'
 }
 
 class Release extends Model<InferAttributes<Release>, InferCreationAttributes<Release>> {
-    declare id:            string;
-    declare type:          ReleaseType | null;
-    declare name:          string;
-    declare release_date:  string | null;
-    declare shortname:     string;
-    declare description:   string | null;
-    declare genres:        string[];
-    declare linktree_urls: string[];
-    declare cover_url:     string;
-    declare sample_urls:   string[];
+    declare id:                 string;
+    declare type:               ReleaseType | null;
+    declare size:               ReleaseSize;
+    declare name:               string;
+    declare release_date:       string | null;
+    declare shortname:          string;
+    declare description:        string | null;
+    declare genres:             string[];
+    declare featured_video_url: string | null;
+    declare linktree_urls:      string[];
+    declare cover_url:          string;
+    declare sample_urls:        string[];
 }
 
 const isValidUrl = (str: string): boolean => {
@@ -37,11 +47,23 @@ Release.init({
         }
     },
     type: DataTypes.ENUM(...Object.values(ReleaseType)),
+    size: { type: DataTypes.ENUM(...Object.values(ReleaseSize)), allowNull: false },
     name: { type: DataTypes.STRING(128), allowNull: false },
-    release_date: DataTypes.DATE,
+    release_date: DataTypes.DATEONLY,
     shortname: { type: DataTypes.STRING(64), allowNull: false },
     description: DataTypes.STRING(2048),
     genres: { type: DataTypes.ARRAY(DataTypes.STRING(32)), allowNull: false },
+    featured_video_url: {
+        type: DataTypes.STRING(256),
+        allowNull: true,
+        validate: {
+            isValidVideoUrl(value: string | null) {
+                if (value !== null && value !== undefined && !isValidUrl(value))
+                    throw new Error('featured_video_url must be a valid URL');
+            }
+        }
+    },
+
     linktree_urls: {
         type: DataTypes.ARRAY(DataTypes.STRING(256)),
         allowNull: false,

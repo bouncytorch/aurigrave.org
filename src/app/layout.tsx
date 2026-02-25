@@ -16,12 +16,15 @@ export const metadata: Metadata = {
         template: 'aurigrave/%s',
         default: 'aurigrave/?'
     },
+    icons: [
+        { rel: 'icon', type: 'image/ico', url: '/favicon.ico' }
+    ]
 };
 
 export default function RootLayout({
     children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
     return <html lang="en" className={archivo.className} suppressHydrationWarning>
         <body>
