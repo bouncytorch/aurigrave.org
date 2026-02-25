@@ -8,13 +8,19 @@
 
 .coverPlaceholder {
     position: absolute;
+    color: inherit;
+    color: #cccccc;
     inset: 0;
 }
 
-:global(.dark) :not(:hover) .coverPlaceholder {
+:global(.dark) .coverPlaceholder {
     color: #3B3B3B;
 }
 
-:global(.light) :not(:hover) .coverPlaceholder {
-    color: #FFFFFF;
+button:hover .coverPlaceholder {
+    color: #FFF;
+}
+
+:global(.dark) button:hover .coverPlaceholder {
+    color: #000;
 }
