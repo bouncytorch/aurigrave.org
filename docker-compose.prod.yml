@@ -6,15 +6,6 @@ services:
         condition: service_completed_successfully
     env_file:
       - .env
-    environment:
-      DB_HOST: db
-      DB_NAME: "${DB_NAME}"
-      DB_PASSWORD: "${DB_PASSWORD}"
-      DB_PORT: 5432
-      DB_USER: "${DB_USER}"
-      HOSTNAME: 0.0.0.0
-      NODE_ENV: production
-      PORT: 3000
     image: bouncytorch/aurigrave.org:latest
     ports:
       - '3000:3000'
@@ -22,12 +13,6 @@ services:
 
   db:
     container_name: aurigraveorg-postgres
-    env_file:
-      - .env
-    environment:
-      POSTGRES_DB: "${DB_NAME}"
-      POSTGRES_PASSWORD: "${DB_PASSWORD}"
-      POSTGRES_USER: "${DB_USER}"
     healthcheck:
       interval: 5s
       retries: 10
@@ -35,12 +20,12 @@ services:
         - CMD-SHELL
         - "pg_isready -U ${DB_USER} -d ${DB_NAME}"
       timeout: 5s
-    image: postgres:18-alpine
+    image: postgres:18.2
     ports:
-      - '5432:5432'
+      - "5432:5432"
     restart: unless-stopped
     volumes:
-      - aurigraveorg-postgres-vol:/var/lib/postgresql/data
+      - aurigraveorg-postgres-vol:/var/lib/postgresql/18/docker
 
   migrate:
     command: sh -c "npx sequelize-cli db:migrate"
@@ -50,12 +35,6 @@ services:
         condition: service_healthy
     env_file:
       - .env
-    environment:
-      DB_HOST: db
-      DB_NAME: "${DB_NAME}"
-      DB_PASSWORD: "${DB_PASSWORD}"
-      DB_PORT: 5432
-      DB_USER: "${DB_USER}"
     image: bouncytorch/aurigrave.org-migrate:latest
 
 volumes:

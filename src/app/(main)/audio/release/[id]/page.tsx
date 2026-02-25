@@ -1,11 +1,32 @@
-import Linktree, { Link } from '@/components/layout/linktree/Linktree';
 import { getReleases } from '@/lib/releases';
+import { Metadata } from 'next';
+import Loading from '@/components/layout/Loading';
+
+import Linktree, { Link } from '@/components/layout/linktree/Linktree';
 import { faApple, faBandcamp, faSoundcloud, faSpotify, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import YouTubeFrame from '@/components/ui/frame/YouTubeFrame';
 
-export default async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
+import CoverImage from '@/components/ui/CoverImage';
+import { Suspense } from 'react';
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+    const { id } = await params;
+    const release = (await getReleases()).find(v => v.id === id);
+    if (release)
+        return {
+            title: release.id,
+            icons: [
+                { rel: 'icon', type: 'image/webp', url: release.cover_url }
+            ]
+        };
+
+    else return { title: '?' };
+}
+
+
+async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const release = (await getReleases()).find(v => v.id === id);
 
@@ -47,22 +68,34 @@ export default async function ReleaseContent({ params }: { params: Promise<{ id:
                 justifyContent: 'center',
                 flexWrap: 'wrap'
             }}>
-                <Image src={release.cover_url} style={{
-                    width: '100%',
-                    height: '100%',
-                    maxWidth: '400px',
-                    aspectRatio:'1/1',
-                    filter: 'drop-shadow(0px 14px 7px #000000)'
-                }} width={400} height={400} alt={`${release.name} cover`}/>
-                <div style={{flex:'1'}}>
+                <CoverImage src={release.cover_url} alt={`${release.name} cover.`} size={400} style={{ maxWidth: '400px' }} />
+                <div style={{flex:'1', minWidth: '280px'}}>
                     <div style={{display:'flex',flexDirection:'column', gap: '1em', alignItems: 'center'}}>
-                        <h3>SAMPLES</h3>
-                        {release.sample_urls.map((sample) => <audio controls style={{width:'100%'}} key={sample}><source src={sample} /></audio>)}
-                        <h3>LINKS</h3>
-                        <Linktree links={links} />
+                        { !!release.sample_urls.length && <>
+                            <h3>SAMPLES</h3>
+                            {release.sample_urls.map((sample) => <audio controls style={{width:'100%'}} key={sample}><source src={sample} /></audio>)}
+                        </> }
+                        { !!release.featured_video_url && <>
+                            <h3>FEATURED VIDEO</h3>
+                            <YouTubeFrame link={release.featured_video_url} />
+                        </> }
+                        {
+                            !!release.linktree_urls.length && <>
+                                <h3>LINKS</h3>
+                                <Linktree links={links} />
+                            </>
+                        }
                     </div>
                 </div>
             </div>
         </main>
+    );
+}
+
+export default function ReleasePage({ params }: { params: Promise<{ id: string }> }) {
+    return (
+        <Suspense fallback={<Loading/>}>
+            <ReleaseContent params={params} />
+        </Suspense>
     );
 }

@@ -18,7 +18,7 @@ export default function Home() {
                 <main className={styles.main}>
                     <Logo />
                     <p>bouncytorch&apos;s linktree and portfolio page</p>
-                    <NavButtons />
+                    <NavButtons iconBreakpoint='300px' />
                     <p>portfolio reel:</p>
                     <YouTubeFrame link="https://www.youtube.com/embed/1jF1c8nP-JY"/>
                     <p>links:</p>

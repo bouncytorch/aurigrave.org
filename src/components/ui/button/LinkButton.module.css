@@ -1,0 +1,12 @@
+.button-content {
+    container-type: inline-size;
+    container-name: btn;
+}
+
+.icon-view  { display: none; }
+.label-view { display: inline; }
+
+@container btn (max-width: var(--icon-breakpoint)) {
+    .icon-view  { display: inline; }
+    .label-view { display: none; }
+}

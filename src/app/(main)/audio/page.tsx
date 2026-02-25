@@ -6,13 +6,13 @@ import { Metadata } from 'next';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
 
-export const metadata: Metadata = { title: { template: 'audio/%s', default: 'audio' } };
+export const metadata: Metadata = { title: 'audio' };
 
 const SECTIONS: { label: string; type: ReleaseType | null }[] = [
-    { label: 'GAME MUSIC',    type: ReleaseType.Game },
-    { label: 'FILM MUSIC',    type: ReleaseType.Film },
-    { label: 'SOUND DESIGN',  type: ReleaseType.SFX  },
-    { label: 'OTHER RELEASES', type: null             },
+    { label: 'GAME MUSIC',          type: ReleaseType.Game },
+    { label: 'FILM MUSIC',          type: ReleaseType.Film },
+    { label: 'SOUND DESIGN',        type: ReleaseType.SFX  },
+    { label: 'STANDALONE RELEASES', type: null },
 ];
 
 async function AudioContent() {
@@ -27,7 +27,7 @@ async function AudioContent() {
                 if (!filtered.length) return null;
                 return (
                     <section key={label}>
-                        <h2>{label}</h2>
+                        <h2 style={{textAlign:'center', paddingBottom:'0.4em'}}>{label}</h2>
                         <ReleaseCardList releases={filtered} />
                     </section>
                 );

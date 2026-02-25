@@ -4,7 +4,6 @@ This repository contains the source code for https://aurigrave.org.
 
 <img width="843" height="919" alt="screencapture-aurigrave-org-2026-02-24-21_16_18" src="https://github.com/user-attachments/assets/3268fee3-695a-4102-a02e-762da11c64ac" />
 
-
 ## Features
 
 *   **Next.js**: Modern React framework for building performant web applications.
@@ -20,34 +19,59 @@ This repository contains the source code for https://aurigrave.org.
 *   [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
 *   A `.env` file in the project root (see below)
 
-### Environment Variables
-
-Create a `.env` file in the project root:
-
-```env
-DB_NAME=aurigraveorg
-DB_USER=aurigrave
-DB_PASSWORD=your_password
-PORT=3000
-```
-
 ### Development
 
-Clone the repo and start all services locally with hot-reload:
-
+1. Clone the repo and install the required node modules:
 ```bash
 git clone https://github.com/bouncytorch/aurigrave.org
 cd aurigrave.org
-docker compose up --build
+
+npm i
+# or
+pnpm i
+```
+
+2. Create an environment config using `.example.env`:
+```env
+POSTGRES_DB=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+
+NODE_ENV=development
+PORT=3000
+HOSTNAME=0.0.0.0
+```
+
+3. Start the postgres DB:
+```bash
+docker compose up -d db
+```
+
+3. Run migrations on the newly created DB:
+```bash
+npm run migrate:up
+# or
+pnpm migrate:up
+```
+
+4. And finally, start the development server:
+```bash
+npm run dev
+# or
+pnpm dev
 ```
 
 The app will be available at `http://localhost:3000`.
 
-> The `migrate` service will automatically run pending database migrations before the app starts.
-
 ### Production
 
-Uses pre-built images from Docker Hub. Pull and start with:
+Uses pre-built images from Docker Hub. Use the included `docker-compose.prod.yml`:
 
 ```bash
 docker compose -f docker-compose.prod.yml up -d
