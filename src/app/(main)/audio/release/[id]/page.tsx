@@ -16,15 +16,36 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     const release = (await getReleases()).find(v => v.id === id);
     if (release)
         return {
-            title: release.id,
+            title: `${release.name} by bouncytorch`,
+            description: release.description,
+            keywords: release.genres,
+            openGraph: {
+                title: `${release.name} by bouncytorch`,
+                description: release.description || '',
+                url: `https://aurigrave.org/audio/release/${release.id}`,
+                images: [
+                    {
+                        url: release.cover_url,
+                        width: 500,
+                        height: 500,
+                        alt: `${release.name} cover art`,
+                    },
+                ],
+                siteName: 'aurigrave',
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title: `${release.name} by bouncytorch`,
+                description: release.description || '',
+                images: [release.cover_url],
+            },
             icons: [
                 { rel: 'icon', type: 'image/webp', url: release.cover_url }
             ]
         };
 
-    else return { title: '?' };
+    else return { title: 'Release not found' };
 }
-
 
 async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -49,6 +70,24 @@ async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
 
     return (
         <main style={{ paddingBottom:'1em' }}>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': 'MusicRelease',
+                    'name': release.name,
+                    'byArtist': {
+                        '@type': 'MusicGroup',
+                        'name': 'bouncytorch'
+                    },
+                    'datePublished': release.release_date,
+                    'description': release.description,
+                    'image': release.cover_url,
+                    'url': `https://aurigrave.org/audio/release/${release.id}`,
+                    'genre': release.genres,
+                } ) }}
+            />
+
             <h1>{release.shortname.toUpperCase()}</h1>
             <h3>{release.name}</h3>
             <p style={{ opacity: 0.6, paddingTop: '0.1em', paddingBottom: '0.5em' }}>

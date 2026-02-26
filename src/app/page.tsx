@@ -5,9 +5,7 @@ import Linktree from '@/components/layout/linktree/Linktree';
 import ThemeButton from '@/components/ui/button/ThemeButton';
 import YouTubeFrame from '@/components/ui/frame/YouTubeFrame';
 
-import { Metadata } from 'next';
 import { LINKTREE_LINKS } from '@/lib/const';
-export const metadata: Metadata = { title: 'home' };
 
 import styles from './page.module.css';
 
