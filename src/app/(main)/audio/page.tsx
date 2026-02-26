@@ -13,6 +13,7 @@ const SECTIONS: { label: string; type: ReleaseType | null }[] = [
     { label: 'FILM MUSIC',          type: ReleaseType.Film },
     { label: 'SOUND DESIGN',        type: ReleaseType.SFX  },
     { label: 'STANDALONE RELEASES', type: null },
+    { label: 'LEGACY RELEASES',     type: ReleaseType.Legacy }
 ];
 
 async function AudioContent() {
