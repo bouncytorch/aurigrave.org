@@ -6,13 +6,14 @@ import { Metadata } from 'next';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
 
-export const metadata: Metadata = { title: 'audio' };
+export const metadata: Metadata = { title: 'aurigrave/audio' };
 
 const SECTIONS: { label: string; type: ReleaseType | null }[] = [
     { label: 'GAME MUSIC',          type: ReleaseType.Game },
     { label: 'FILM MUSIC',          type: ReleaseType.Film },
     { label: 'SOUND DESIGN',        type: ReleaseType.SFX  },
     { label: 'STANDALONE RELEASES', type: null },
+    { label: 'LEGACY RELEASES',     type: ReleaseType.Legacy }
 ];
 
 async function AudioContent() {

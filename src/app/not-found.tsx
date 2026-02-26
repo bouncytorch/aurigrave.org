@@ -1,5 +1,5 @@
 import Logo from '@/components/ui/logo/Logo';
-import styles from './(home)/page.module.css';
+import styles from './page.module.css';
 
 export default function NotFound() {
     return <div className={styles.wrapper}>
