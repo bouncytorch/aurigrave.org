@@ -12,7 +12,7 @@ import TransitionsEnabler from '@/components/misc/TransitionsEnabler';
 const archivo = Archivo({ subsets: ['latin', 'latin-ext'], weight: 'variable', display:'swap' });
 
 export const metadata: Metadata = {
-    title: 'aurigrave',
+    title: 'aurigrave - bouncytorch portfolio website',
     description: 'electronic, orchestral and ambient music, immature film, audio and sound design studies, web and game development discussions and updates.',
     keywords: [
         'bouncytorch', 'aurigrave', 'music', 'producer', 'composer',
