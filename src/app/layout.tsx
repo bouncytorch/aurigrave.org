@@ -12,13 +12,16 @@ import TransitionsEnabler from '@/components/misc/TransitionsEnabler';
 const archivo = Archivo({ subsets: ['latin', 'latin-ext'], weight: 'variable', display:'swap' });
 
 export const metadata: Metadata = {
-    title: 'aurigrave - bouncytorch portfolio website',
+    title: {
+        template: '%s // aurigrave',
+        default: 'bouncytorch portfolio // aurigrave'
+    },
     description: 'electronic, orchestral and ambient music, immature film, audio and sound design studies, web and game development discussions and updates.',
     keywords: [
-        'bouncytorch', 'aurigrave', 'music', 'producer', 'composer',
+        'bouncytorch', 'bobsytoch', 'bobsy', 'aurigrave', 'music', 'producer', 'composer',
         'soundtrack', 'video', 'game', 'software', 'blog', 'sound design',
         'vgm', 'videogame', 'ost', 'original', 'chiptune', 'orchestral',
-        'electronic', 'electronica'
+        'electronic', 'electronica', 'minecraft', 'ori', 'video game music'
     ],
     icons: [
         { rel: 'icon', type: 'image/ico', url: '/favicon.ico' }

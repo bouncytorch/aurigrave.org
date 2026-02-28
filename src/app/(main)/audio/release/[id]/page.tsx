@@ -16,11 +16,11 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     const release = (await getReleases()).find(v => v.id === id);
     if (release)
         return {
-            title: `${release.name} by bouncytorch`,
+            title: release.name,
             description: release.description,
-            keywords: release.genres,
+            keywords: [...release.genres, release.name.toLowerCase()],
             openGraph: {
-                title: `${release.name} by bouncytorch`,
+                title: release.name,
                 description: release.description || '',
                 url: `https://aurigrave.org/audio/release/${release.id}`,
                 images: [
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
             },
             twitter: {
                 card: 'summary_large_image',
-                title: `${release.name} by bouncytorch`,
+                title: release.name,
                 description: release.description || '',
                 images: [release.cover_url],
             },
