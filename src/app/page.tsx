@@ -14,7 +14,7 @@ export default function Home() {
         <div className={styles.wrapper}>
             <div className={styles.body}>
                 <main className={styles.main}>
-                    <Logo />
+                    <h1><Logo /></h1>
                     <p>bouncytorch&apos;s linktree and portfolio page</p>
                     <NavButtons iconBreakpoint='300px' />
                     <p>portfolio reel:</p>

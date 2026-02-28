@@ -6,7 +6,7 @@ import { Metadata } from 'next';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
 
-export const metadata: Metadata = { title: 'aurigrave/audio' };
+export const metadata: Metadata = { title: 'bobsy\'s audio' };
 
 const SECTIONS: { label: string; type: ReleaseType | null }[] = [
     { label: 'GAME MUSIC',          type: ReleaseType.Game },
