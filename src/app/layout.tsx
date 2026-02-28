@@ -21,7 +21,8 @@ export const metadata: Metadata = {
         'bouncytorch', 'bobsytoch', 'bobsy', 'aurigrave', 'music', 'producer', 'composer',
         'soundtrack', 'video', 'game', 'software', 'blog', 'sound design',
         'vgm', 'videogame', 'ost', 'original', 'chiptune', 'orchestral',
-        'electronic', 'electronica', 'minecraft', 'ori', 'video game music'
+        'electronic', 'electronica', 'minecraft', 'ori', 'video game music',
+        'Taras Skrypniak', 'Skrypniak', 'Taras'
     ],
     icons: [
         { rel: 'icon', type: 'image/ico', url: '/favicon.ico' }
