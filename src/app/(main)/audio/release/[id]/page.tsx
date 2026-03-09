@@ -1,5 +1,5 @@
 import { getReleases } from '@/lib/releases';
-import { Metadata } from 'next';
+import { Metadata, ResolvingMetadata } from 'next';
 import Loading from '@/components/layout/Loading';
 
 import Linktree, { Link } from '@/components/layout/linktree/Linktree';
@@ -11,17 +11,16 @@ import YouTubeFrame from '@/components/ui/frame/YouTubeFrame';
 import CoverImage from '@/components/ui/CoverImage';
 import { Suspense } from 'react';
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }, parent: ResolvingMetadata): Promise<Metadata> {
     const { id } = await params;
+    const p = await parent;
     const release = (await getReleases()).find(v => v.id === id);
-    if (release)
+    if (release && p.keywords)
         return {
             title: release.name,
             description: release.description,
-            keywords: [...release.genres, release.name.toLowerCase()],
+            keywords: [...release.genres, release.name.toLowerCase(), ...p.keywords],
             openGraph: {
-                title: release.name,
-                description: release.description || '',
                 url: `https://aurigrave.org/audio/release/${release.id}`,
                 images: [
                     {
@@ -31,12 +30,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
                         alt: `${release.name} cover art`,
                     },
                 ],
-                siteName: 'aurigrave',
             },
             twitter: {
                 card: 'summary_large_image',
-                title: release.name,
-                description: release.description || '',
                 images: [release.cover_url],
             },
             icons: [
