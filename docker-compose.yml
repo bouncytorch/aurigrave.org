@@ -1,12 +1,12 @@
 services:
   db:
-    image: postgres:18-alpine
+    image: postgres:18.2
     container_name: aurigraveorg-db
     restart: unless-stopped
     env_file:
       - .env
     volumes:
-      - aurigraveorg-postgres-vol:/var/lib/postgresql/data
+      - aurigraveorg-postgres-vol:/var/lib/postgresql/18/docker
     ports:
     - "5432:5432"
     healthcheck:
@@ -32,7 +32,7 @@ services:
     container_name: aurigraveorg-app
     restart: unless-stopped
     ports:
-      - "${PORT}:3000"
+      - "${PORT}:${PORT}"
     env_file:
       - .env
     depends_on:

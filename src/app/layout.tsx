@@ -18,7 +18,8 @@ export const metadata: Metadata = {
     },
     description: 'electronic, orchestral and ambient music, immature film, audio and sound design studies, web and game development discussions and updates.',
     keywords: [
-        'bouncytorch', 'bobsytoch', 'bobsy', 'aurigrave', 'music', 'producer', 'composer',
+        'bouncytorch', 'bobsytoch', 'bobsy', 'aurigrave', 'bouncytorch portfolio', 'music', 'producer', 'composer',
+        'bouncytorch aurigrave', 'bouncytorch music', 'Taras Skrypniak music',
         'soundtrack', 'video', 'game', 'software', 'blog', 'sound design',
         'vgm', 'videogame', 'ost', 'original', 'chiptune', 'orchestral',
         'electronic', 'electronica', 'minecraft', 'ori', 'video game music',
@@ -28,6 +29,17 @@ export const metadata: Metadata = {
         { rel: 'icon', type: 'image/ico', url: '/favicon.ico' }
     ],
     metadataBase: new URL('https://aurigrave.org' ),
+    openGraph: {
+        images: ['/og-image.webp']
+    },
+    twitter: {
+        title: {
+            template: '%s // aurigrave',
+            default: 'bouncytorch portfolio // aurigrave'
+        },
+        card: 'summary_large_image',
+        images: ['/og-image.webp']
+    },
     alternates: {
         canonical: '/',
     }
