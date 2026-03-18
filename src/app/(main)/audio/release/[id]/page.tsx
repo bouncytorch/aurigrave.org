@@ -10,10 +10,9 @@ import YouTubeFrame from '@/components/ui/frame/YouTubeFrame';
 
 import CoverImage from '@/components/ui/CoverImage';
 import { Suspense } from 'react';
-import { ReleaseSize, ReleaseType } from '@/models/Release';
 
-export function getUrlBase(id: string, type: ReleaseType | null, size: ReleaseSize) {
-    if (type && type !== ReleaseType.Legacy) return `https://files.aurigrave.org/bouncytorch/Projects/previews/${type}/${id}/`;
+function getUrlBase(id: string, type: string | null, size: string) {
+    if (type && type !== 'legacy') return `https://files.aurigrave.org/bouncytorch/Projects/previews/${type}/${id}/`;
     else return `https://files.aurigrave.org/bouncytorch/Projects/previews/${size}/${id}/`;
 }
 
