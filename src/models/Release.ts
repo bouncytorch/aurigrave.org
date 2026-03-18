@@ -24,10 +24,9 @@ class Release extends Model<InferAttributes<Release>, InferCreationAttributes<Re
     declare shortname:          string;
     declare description:        string | null;
     declare genres:             string[];
+    declare samples:            string[];
     declare featured_video_url: string | null;
     declare linktree_urls:      string[];
-    declare cover_url:          string;
-    declare sample_urls:        string[];
 }
 
 const isValidUrl = (str: string): boolean => {
@@ -79,28 +78,9 @@ Release.init({
             }
         }
     },
-    cover_url: {
-        type: DataTypes.STRING(256),
-        validate: {
-            isUrl: { msg: 'cover_url must be a valid URL' }
-        }
-    },
-    sample_urls: {
+    samples: {
         type: DataTypes.ARRAY(DataTypes.STRING(256)),
         allowNull: false,
-        validate: {
-            allValidUrls(value: string[]) {
-                if (!Array.isArray(value)) throw new Error('sample_urls must be an array');
-                value.forEach((url, i) => {
-                    if (url === null || url === undefined) {
-                        throw new Error(`sample_urls[${i}] must not be null`);
-                    }
-                    if (!isValidUrl(url)) {
-                        throw new Error(`sample_urls[${i}] is not a valid URL: "${url}"`);
-                    }
-                });
-            }
-        }
     },
 }, { sequelize, modelName: 'Release', tableName: 'releases', timestamps: false, defaultScope: { order: [['release_date', 'DESC NULLS FIRST']] } });
 
