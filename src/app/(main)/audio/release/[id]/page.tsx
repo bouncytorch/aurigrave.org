@@ -10,6 +10,12 @@ import YouTubeFrame from '@/components/ui/frame/YouTubeFrame';
 
 import CoverImage from '@/components/ui/CoverImage';
 import { Suspense } from 'react';
+import { ReleaseSize, ReleaseType } from '@/models/Release';
+
+function getUrlBase(id: string, type: ReleaseType | null, size: ReleaseSize) {
+    if (type && type !== ReleaseType.Legacy) return `https://files.aurigrave.org/bouncytorch/Projects/previews/${type}/${id}/`;
+    else return `https://files.aurigrave.org/bouncytorch/Projects/previews/${size}/${id}/`;
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }, parent: ResolvingMetadata): Promise<Metadata> {
     const { id } = await params;
@@ -24,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
                 url: `https://aurigrave.org/audio/release/${release.id}`,
                 images: [
                     {
-                        url: release.cover_url,
+                        url: getUrlBase(release.id, release.type, release.size) + 'cover.webp',
                         width: 500,
                         height: 500,
                         alt: `${release.name} cover art`,
@@ -33,10 +39,10 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
             },
             twitter: {
                 card: 'summary_large_image',
-                images: [release.cover_url],
+                images: [getUrlBase(release.id, release.type, release.size) + 'cover.webp'],
             },
             icons: [
-                { rel: 'icon', type: 'image/webp', url: release.cover_url }
+                { rel: 'icon', type: 'image/webp', url: getUrlBase(release.id, release.type, release.size) + 'cover.webp' }
             ]
         };
 
@@ -49,6 +55,7 @@ async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
 
     if (!release) return notFound();
 
+    const baseUrl = getUrlBase(release.id, release.type, release.size);
     const links: Link[] = [];
     for (const link of release.linktree_urls) {
         if (link.includes('bandcamp.com'))
@@ -78,7 +85,7 @@ async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
                     },
                     'datePublished': release.release_date,
                     'description': release.description,
-                    'image': release.cover_url,
+                    'image': baseUrl + 'cover.webp',
                     'url': `https://aurigrave.org/audio/release/${release.id}`,
                     'genre': release.genres,
                 } ) }}
@@ -103,12 +110,12 @@ async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
                 justifyContent: 'center',
                 flexWrap: 'wrap'
             }}>
-                <CoverImage src={release.cover_url} alt={`${release.name} cover.`} size={400} style={{ filter: 'drop-shadow(0px 9px 14px #000000ce)', maxWidth: '400px' }} />
+                <CoverImage src={baseUrl + 'cover.webp'} alt={`${release.name} cover.`} size={400} style={{ filter: 'drop-shadow(0px 9px 14px #000000ce)', maxWidth: '400px' }} />
                 <div style={{flex:'1', minWidth: '280px'}}>
                     <div style={{display:'flex',flexDirection:'column', gap: '1em', alignItems: 'center'}}>
-                        { !!release.sample_urls.length && <>
+                        { !!release.samples.length && <>
                             <h3>SAMPLES</h3>
-                            {release.sample_urls.map((sample) => <audio controls style={{width:'100%'}} key={sample}><source src={sample} /></audio>)}
+                            {release.samples.map((sample) => <audio controls style={{width:'100%'}} key={sample}><source src={baseUrl + sample} /></audio>)}
                         </> }
                         { !!release.featured_video_url && <>
                             <h3>FEATURED VIDEO</h3>
