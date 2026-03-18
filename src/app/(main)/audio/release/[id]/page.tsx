@@ -12,7 +12,7 @@ import CoverImage from '@/components/ui/CoverImage';
 import { Suspense } from 'react';
 import { ReleaseSize, ReleaseType } from '@/models/Release';
 
-function getUrlBase(id: string, type: ReleaseType | null, size: ReleaseSize) {
+export function getUrlBase(id: string, type: ReleaseType | null, size: ReleaseSize) {
     if (type && type !== ReleaseType.Legacy) return `https://files.aurigrave.org/bouncytorch/Projects/previews/${type}/${id}/`;
     else return `https://files.aurigrave.org/bouncytorch/Projects/previews/${size}/${id}/`;
 }
