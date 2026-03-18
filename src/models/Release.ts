@@ -1,7 +1,6 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
 import sequelize from '@/lib/db';
 
-// TODO: DONT FORGET ABOUT THE MIGRATION
 export enum ReleaseType {
     Game   = 'game',
     Film   = 'film',

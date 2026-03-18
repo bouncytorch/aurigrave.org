@@ -6,7 +6,11 @@ import Link from 'next/link';
 import styles from './ReleaseCard.module.css';
 import { InferAttributes } from 'sequelize';
 import CoverImage from '../CoverImage';
-import { getUrlBase } from '@/app/(main)/audio/release/[id]/page';
+
+function getUrlBase(id: string, type: string | null, size: string) {
+    if (type && type !== 'legacy') return `https://files.aurigrave.org/bouncytorch/Projects/previews/${type}/${id}/`;
+    else return `https://files.aurigrave.org/bouncytorch/Projects/previews/${size}/${id}/`;
+}
 
 export default function ReleaseCard({ release }: { release: InferAttributes<Release> }) {
     return <Link className={styles.releaseCardLink} href={`/audio/release/${release.id}`}>
