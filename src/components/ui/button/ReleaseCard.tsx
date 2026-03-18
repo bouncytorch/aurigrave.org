@@ -9,7 +9,7 @@ import CoverImage from '../CoverImage';
 
 function getUrlBase(id: string, type: string | null, size: string) {
     if (type && type !== 'legacy') return `https://files.aurigrave.org/bouncytorch/Projects/previews/${type}/${id}/`;
-    else return `https://files.aurigrave.org/bouncytorch/Projects/previews/${size}/${id}/`;
+    else return `https://files.aurigrave.org/bouncytorch/Projects/previews/other/${size}/${id}/`;
 }
 
 export default function ReleaseCard({ release }: { release: InferAttributes<Release> }) {
