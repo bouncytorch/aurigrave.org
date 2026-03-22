@@ -2,7 +2,6 @@ import Logo from '@/components/ui/logo/Logo';
 import Footer from '@/components/layout/Footer';
 import NavButtons from '@/components/layout/nav/NavButtons';
 import Linktree from '@/components/layout/linktree/Linktree';
-import ThemeButton from '@/components/ui/button/ThemeButton';
 import YouTubeFrame from '@/components/ui/frame/YouTubeFrame';
 
 import { LINKTREE_LINKS } from '@/lib/const';
@@ -25,7 +24,6 @@ export default function Home() {
                     <Linktree links={LINKTREE_LINKS} />
                     <h3>cmayk</h3>
                     <Linktree links={[{ name: 'oxirian.net', icon: faGlobe, link: 'https://oxirian.net'  }]}></Linktree>
-                    <ThemeButton />
                     <Footer />
                 </main>
             </div>

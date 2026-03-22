@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { CSSProperties } from 'react';
 import styles from './CoverImage.module.css';
 
-// PlaceholderSVG.tsx
 function PlaceholderSVG() {
     return (
         <svg className={styles.coverPlaceholder} viewBox="-15 -15 190 190" xmlns="http://www.w3.org/2000/svg">
@@ -17,13 +16,20 @@ export default function CoverImage({ src, alt, size, style }: {
     src: string; alt: string; size: number; style?: CSSProperties;
 }) {
     return (
-        <div style={{ position: 'relative', width: size, height: size, zIndex: 1, ...style }}>
+        <div style={{
+            position: 'relative',
+            width: '100%',
+            aspectRatio: '1 / 1',
+            maxWidth: size,
+            zIndex: 1,
+            ...style
+        }}>
             <PlaceholderSVG />
             <Image
                 className={styles.cover}
                 src={src}
-                width={size}
-                height={size}
+                fill
+                sizes={`${size}px`}
                 onError={(e) => (e.target as HTMLImageElement).style.opacity = '0'}
                 alt={alt}
             />

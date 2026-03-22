@@ -1,18 +1,28 @@
 .releaseCardLink {
     text-decoration: none;
     color: inherit;
+    display: block;
+    width: 100%;
 }
 
 .releaseCard {
     border: none;
-    padding: 5px;
-    background: var(--background-tinted);
-    flex-direction: column;
-    width: fit-content;
+    padding: 0;
+    background: none;
     display: flex;
-    gap: 0.5em;
-    padding-bottom: 0.4em;
+    flex-direction: column;
+    width: 100%;
     align-items: center;
-    border-radius: 0.5em;
+    border-radius: 0;
     overflow: hidden;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.releaseCardDetails {
+    padding: 5px;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden
 }
