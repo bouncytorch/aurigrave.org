@@ -9,7 +9,7 @@ export default function NavButtons({ iconBreakpoint }: { iconBreakpoint: string 
     const path = usePathname();
     return <div className={styles['nav-buttons']}>
         <LinkButton label='audio' href='/audio' disabled={path === '/audio'} icon={faVolumeHigh} iconBreakpoint={iconBreakpoint} />
-        <LinkButton label='software' href='/software' disabled={path === '/software'} icon={faCodeBranch} iconBreakpoint={iconBreakpoint} />
+        <LinkButton label='software' href='/software' disabled icon={faCodeBranch} iconBreakpoint={iconBreakpoint} />
         <LinkButton label='blog' href='/blog' disabled icon={faQuoteRight} iconBreakpoint={iconBreakpoint} />
     </div>;
 }

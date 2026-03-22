@@ -71,7 +71,7 @@ async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
     }
 
     return (
-        <main style={{ paddingBottom:'1em' }}>
+        <main>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify({
