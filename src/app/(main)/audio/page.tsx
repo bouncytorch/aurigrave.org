@@ -28,7 +28,7 @@ async function AudioContent() {
                 if (!filtered.length) return null;
                 return (
                     <section key={label}>
-                        <h2 style={{textAlign:'center', paddingBottom:'0.4em'}}>{label}</h2>
+                        <h2 style={{padding:'0.2em 0'}}>{label}</h2>
                         <ReleaseCardList releases={filtered} />
                     </section>
                 );
