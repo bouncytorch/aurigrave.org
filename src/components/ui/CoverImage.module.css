@@ -1,9 +1,7 @@
 .cover {
     display: block;
-    width: 100%;
-    height: auto;
+    object-fit: cover;
     min-width: 0;
-    position: relative;
 }
 
 .coverPlaceholder {
@@ -17,10 +15,12 @@
     color: #3B3B3B;
 }
 
-button:hover .coverPlaceholder {
-    color: #FFF;
-}
+@media (hover: hover) {
+    button:hover .coverPlaceholder {
+        color: #FFF;
+    }
 
-:global(.dark) button:hover .coverPlaceholder {
-    color: #000;
+    :global(.dark) button:hover .coverPlaceholder {
+        color: #000;
+    }
 }
