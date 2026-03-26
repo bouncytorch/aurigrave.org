@@ -95,7 +95,7 @@ input {
   margin: 0 0.2em;
 }
 
-button, input[type='button'] {
+button, input[type='button'], input[type='submit'] {
   color: var(--stroke);
   font-family: var(--font);
   font-size: 1em;
@@ -109,12 +109,12 @@ button, input[type='button'] {
 }
 
 @media (hover: hover) {
-  button:hover:not(:disabled), input[type='button']:hover:not(:disabled) {
+  button:hover:not(:disabled), input[type='button']:hover:not(:disabled), input[type='submit']:hover:not(:disabled) {
     background-color: var(--background-inverted);
     color: var(--stroke-inverted);
   }
 
-  button:active:hover:not(:disabled), input[type='button']:active:hover:not(:disabled) {
+  button:active:hover:not(:disabled), input[type='button']:active:hover:not(:disabled), input[type='submit']:active:hover:not(:disabled) {
     scale: 0.9;
   }
 }
@@ -125,8 +125,9 @@ button:disabled, input[type='button']:disabled {
 }
 
 input[type='checkbox'] {
-  width: 1.5em;
-  height: 1.5em;
+  width: 1em;
+  height: 1em;
+  cursor: pointer;
 }
 
 footer {
@@ -139,13 +140,33 @@ pre {
   padding: 0.5em;
   border-radius: 0.2em;
   color: #FFF;
+  white-space: pre-wrap;
+  line-break: anywhere;
+}
+
+/* FIXME: Replace this? This is a fix for the MDEditor */
+.w-md-editor pre,
+.wmde-markdown pre {
+  background: unset;
+  color: unset;
+  padding: unset;
+  border-radius: unset;
+}
+
+.w-md-editor pre::before,
+.wmde-markdown pre::before {
+  content: none;
 }
 
 pre::before {
-  content: attr(data-lang);
+  content: attr(data-language);
   opacity: 0.4;
   font-size: 0.8em;
   display: block;
+}
+
+figure[data-rehype-pretty-code-figure] {
+  margin: 0;
 }
 
 blockquote {
@@ -162,4 +183,21 @@ blockquote::before {
   left: -1em;
   top: -5%;
   background: var(--background-inverted);
+}
+
+label {
+  vertical-align: top;
+}
+
+img, input, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  background: var(--background-tinted);
+  border: none;
+  max-width: 100%;
+}
+
+fieldset {
+  min-width: 0;
+  max-width: 100%;
 }
