@@ -7,7 +7,7 @@ import { useTheme } from 'next-themes';
 export default function ThemeButton() {
     const { resolvedTheme, setTheme } = useTheme();
     return (
-        <button style={{ padding: '0.4em 0.4em' }} onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
+        <button style={{ padding: '0.5em 0.4em' }} onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
             <FontAwesomeIcon icon={faCircleHalfStroke} />
         </button>
     );

@@ -8,11 +8,10 @@ const YEAR = new Date().getFullYear();
 
 export default function Footer() {
     return <footer style={{ textAlign: 'center' }}>
-
         <p style={{ marginBottom: '10px' }}>
-            made with ♡ by bouncytorch<br/>
+            made with <span style={{ fontSize: '1.2em' }}>♥</span> by bouncytorch<br/>
             aurigrave (c) 2023 - {YEAR}<br/>
-            <a href="http://github.com/bouncytorch/aurigrave.org">source on <FontAwesomeIcon icon={faGithub} /> github</a>
+            <a href="http://github.com/bouncytorch/aurigrave.org">source on <FontAwesomeIcon icon={faGithub}/> github</a>
         </p>
         <ThemeButton />
     </footer>;

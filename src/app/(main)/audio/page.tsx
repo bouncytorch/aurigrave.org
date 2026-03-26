@@ -21,18 +21,18 @@ async function AudioContent() {
     const releases = await getReleases();
 
     return (
-        <main>
+        <main className='reset-spacing'>
             <h1>AUDIO CREDITS</h1>
-            {SECTIONS.map(({ label, type }) => {
+            { SECTIONS.map(({ label, type }) => {
                 const filtered = releases.filter(v => v.type === type);
                 if (!filtered.length) return null;
                 return (
-                    <section key={label}>
-                        <h2 style={{padding:'0.2em 0'}}>{label}</h2>
+                    <section key={ label }>
+                        <h2 style={{ padding:'0.2em 0' }}>{label}</h2>
                         <ReleaseCardList releases={filtered} />
                     </section>
                 );
-            })}
+            }) }
         </main>
     );
 }

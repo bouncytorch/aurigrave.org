@@ -56,22 +56,18 @@ async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
 
     const baseUrl = getUrlBase(release.id, release.type, release.size);
     const links: Link[] = [];
-    for (const link of release.linktree_urls) {
-        if (link.includes('bandcamp.com'))
-            links.push({ name: 'camp', icon: faBandcamp, link });
-        else if (link.includes('soundcloud.com'))
-            links.push({ name: 'cloud', icon: faSoundcloud, link });
-        else if (link.includes('open.spotify.com'))
-            links.push({ name: 'spotify', icon: faSpotify, link });
-        else if (link.includes('youtube.com'))
-            links.push({ name: 'youtube', icon: faYoutube, link });
-        else if (link.includes('music.apple.com'))
-            links.push({ name: 'apple', icon: faApple, link });
-        else links.push({ name: new URL(link).hostname, icon: faGlobe, link });
-    }
+    // I don't care if this formatting is diabolic, deal with it
+    for (const link of release.linktree_urls)
+        if      (link.includes('bandcamp.com'))     links.push({ name: 'camp',                 icon: faBandcamp,   link });
+        else if (link.includes('soundcloud.com'))   links.push({ name: 'cloud',                icon: faSoundcloud, link });
+        else if (link.includes('open.spotify.com')) links.push({ name: 'spotify',              icon: faSpotify,    link });
+        else if (link.includes('youtube.com'))      links.push({ name: 'youtube',              icon: faYoutube,    link });
+        else if (link.includes('music.apple.com'))  links.push({ name: 'apple',                icon: faApple,      link });
+        else                                        links.push({ name: new URL(link).hostname, icon: faGlobe,      link });
+
 
     return (
-        <main>
+        <main className='reset-spacing'>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify({

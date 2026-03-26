@@ -1,7 +1,10 @@
 * {
+  box-sizing: border-box;
+}
+
+.reset-spacing *:not(.keep-spacing):not(button):not(input):not(h1) {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 .transitions-enabled * {
@@ -63,7 +66,6 @@ body {
   font-weight: var(--font-weight);
   font-size: var(--font-size);
   color: var(--stroke);
-  font-family: var(--font);
   min-height: 100vh;
 
 }
@@ -74,6 +76,11 @@ h1 {
 
 h2 {
   font-weight: 800;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
 }
 
 a {
@@ -118,9 +125,6 @@ button:disabled, input[type='button']:disabled {
 }
 
 input[type='checkbox'] {
-  /* TODO: style the checkbox */
-  /* appearance: none;
-  background: var(--background-tinted); */
   width: 1.5em;
   height: 1.5em;
 }
@@ -128,4 +132,34 @@ input[type='checkbox'] {
 footer {
   font-size: 0.9em;
   opacity: 0.6;
+}
+
+pre {
+  background: #212130;
+  padding: 0.5em;
+  border-radius: 0.2em;
+  color: #FFF;
+}
+
+pre::before {
+  content: attr(data-lang);
+  opacity: 0.4;
+  font-size: 0.8em;
+  display: block;
+}
+
+blockquote {
+  position: relative;
+}
+
+blockquote::before {
+  content: '@';
+  color: #00000000;
+  opacity: 0.2;
+  position: absolute;
+  width: 0.5em;
+  height: 110%;
+  left: -1em;
+  top: -5%;
+  background: var(--background-inverted);
 }

@@ -1,9 +1,8 @@
 export const dynamic = 'force-dynamic';
 
-import { MetadataRoute } from 'next';
 import { getReleases } from '@/lib/releases';
 
-export default async function sitemap( ): Promise<MetadataRoute.Sitemap> {
+export default async function sitemap() {
     const baseUrl = 'https://aurigrave.org';
 
     const releases = await getReleases( );
