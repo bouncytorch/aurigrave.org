@@ -1,6 +1,6 @@
 import Loading from '@/components/layout/Loading';
 import ReleaseCardList from '@/components/layout/ReleaseCardList';
-import { getReleases } from '@/lib/releases';
+import { getReleases } from '@/lib/db/releases';
 import { ReleaseType } from '@/models/Release';
 import { Metadata } from 'next';
 import { connection } from 'next/server';
@@ -37,7 +37,7 @@ async function AudioContent() {
     );
 }
 
-export default function Audio() {
+export default async function Audio() {
     return (
         <Suspense fallback={<Loading />}>
             <AudioContent />

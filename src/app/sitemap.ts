@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 
-import { getReleases } from '@/lib/releases';
+import { getReleases } from '@/lib/db/releases';
 
 export default async function sitemap() {
     const baseUrl = 'https://aurigrave.org';

@@ -1,4 +1,4 @@
-import { getReleases } from '@/lib/releases';
+import { getReleases } from '@/lib/db/releases';
 import { Metadata, ResolvingMetadata } from 'next';
 import Loading from '@/components/layout/Loading';
 

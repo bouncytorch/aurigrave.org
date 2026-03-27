@@ -7,14 +7,14 @@
   padding: 0;
 }
 
-/* .transitions-enabled * {
+.transitions-enabled * {
   transition:
     color            0.01s linear,
     background-color 0.1s linear,
     fill             0.1s linear,
     scale            0.05s linear,
     border-color     0.1s linear;
-} */
+}
 
 :root {
   --font-size: 18px;
@@ -246,14 +246,30 @@ label {
 }
 
 img, input, textarea {
+  max-width: 100%;
   font-family: inherit;
   font-size: inherit;
+  field-sizing: content;
+}
+
+input[type='text'], textarea {
   background: var(--background-tinted);
   border: none;
-  max-width: 100%;
+  min-width: 100px;
+}
+
+textarea {
+  width:max-content;
+  field-sizing: content;
+  resize: none;
 }
 
 fieldset {
   min-width: 0;
   max-width: 100%;
+}
+
+select {
+  font-size: inherit;
+  border: none;
 }
