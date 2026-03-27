@@ -1,6 +1,7 @@
 'use client';
 
-import MDEditor from '@uiw/react-md-editor';
+import dynamic from 'next/dynamic';
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 import { useState } from 'react';
 import H1Input from '@/components/ui/input/H1Input';
 import { useTheme } from 'next-themes';
