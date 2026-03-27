@@ -7,10 +7,9 @@ import { useTheme } from 'next-themes';
 import { MarkdownHooks } from 'react-markdown';
 import rehypePrettyCode from 'rehype-pretty-code';
 
-
 export default function App() {
     const [ content, setContent ] = useState('');
-    const [ showPreview, setShowPreview ] = useState(true);
+    const [ showPreview, setShowPreview ] = useState(false);
     const { resolvedTheme } = useTheme();
 
     return (
@@ -43,7 +42,6 @@ export default function App() {
                             onChange={(val) => setContent(val ?? '')}
                             id='content'
                         />
-                        { /* This is to make the MDEditor field required */ }
                         <input
                             type="text"
                             name="content"
@@ -70,13 +68,16 @@ export default function App() {
                                     onChange={(e) => setShowPreview(e.target.checked)}
                                 />
                             </legend>
-                            {showPreview && <MarkdownHooks rehypePlugins={[[rehypePrettyCode, { theme: 'github-dark-dimmed' }]]}>{content}</MarkdownHooks>}
+                            {showPreview && (
+                                <MarkdownHooks rehypePlugins={[ [rehypePrettyCode, { theme: 'github-dark-dimmed' }], ]}>
+                                    {content}
+                                </MarkdownHooks>
+                            )}
                         </fieldset>
                     </div>
-
                 </fieldset>
 
-                <p><input type="submit" value="Create" /></p>
+                <p><input type="submit" value="create" /></p>
             </form>
         </main>
     );

@@ -7,14 +7,14 @@
   padding: 0;
 }
 
-.transitions-enabled * {
+/* .transitions-enabled * {
   transition:
     color            0.01s linear,
     background-color 0.1s linear,
     fill             0.1s linear,
     scale            0.05s linear,
     border-color     0.1s linear;
-}
+} */
 
 :root {
   --font-size: 18px;
@@ -127,6 +127,18 @@ button:disabled, input[type='button']:disabled {
 input[type='checkbox'] {
   width: 1em;
   height: 1em;
+}
+
+input[type='checkbox']:not(:active) {
+  cursor: pointer;
+}
+
+input[type='radio'] {
+  width: 1em;
+  height: 1em;
+}
+
+input[type='radio']:not(:active) {
   cursor: pointer;
 }
 
@@ -140,22 +152,9 @@ pre {
   padding: 0.5em;
   border-radius: 0.2em;
   color: #FFF;
+  font-size: 0.8em;
   white-space: pre-wrap;
-  line-break: anywhere;
-}
-
-/* FIXME: Replace this? This is a fix for the MDEditor */
-.w-md-editor pre,
-.wmde-markdown pre {
-  background: unset;
-  color: unset;
-  padding: unset;
-  border-radius: unset;
-}
-
-.w-md-editor pre::before,
-.wmde-markdown pre::before {
-  content: none;
+  overflow-wrap: break-word;
 }
 
 pre::before {
@@ -165,9 +164,66 @@ pre::before {
   display: block;
 }
 
+/* Fix for the word overflow in rehype-pretty-code pre-s */
+pre code {
+  min-width: 0;
+  max-width: 100%;
+}
+
+pre span[data-line] {
+  min-width: 0;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Fix for MDEditor */
+.w-md-editor pre,
+.wmde-markdown pre {
+  background: unset;
+  color: unset;
+  padding: unset;
+  border-radius: unset;
+  white-space: unset;
+  overflow-wrap: unset;
+}
+
+.w-md-editor pre::before,
+.wmde-markdown pre::before {
+  content: none;
+}
+
+/* rehype-pretty-code styles */
+/* TODO: Implement additional highlighting styles for rehype-pretty-code */
+code[data-line-numbers] {
+  counter-reset: line;
+}
+
+code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 0.75rem;
+  margin-right: 1em;
+  text-align: right;
+  color: gray;
+}
+
+code[data-line-numbers-max-digits="2"] > [data-line]::before {
+  width: 1.25rem;
+}
+
+code[data-line-numbers-max-digits="3"] > [data-line]::before {
+  width: 1.75rem;
+}
+
+code[data-line-numbers-max-digits="4"] > [data-line]::before {
+  width: 2.25rem;
+}
+
 figure[data-rehype-pretty-code-figure] {
   margin: 0;
 }
+/* rehype-pretty-code styles */
 
 blockquote {
   position: relative;
