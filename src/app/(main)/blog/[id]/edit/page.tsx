@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import { requireAdmin } from '@/lib/auth';
 import MainError from '@/components/layout/MainError';
-import BlogEditor from '@/components/layout/BlogEditor';
-import { getAnyBlog } from '@/lib/db/blogs.admin';
+import BlogEditor from '@/components/layout/blog/editor/BlogEditor';
+import { getAnyBlog } from '@/lib/db/blog/admin';
 
 async function BlogEditorPageContent({ params }: { params: Promise<{ id: string }> }) {
     try { await requireAdmin(); }
@@ -20,6 +20,7 @@ async function BlogEditorPageContent({ params }: { params: Promise<{ id: string 
         old_keywords={post.keywords}
         old_state={post.state}
         old_tags={post.tags}
+        createdAt={post.createdAt}
     />;
 }
 

@@ -1,3 +1,5 @@
+'use server';
+
 import Release from '@/models/Release';
 import { cacheLife } from 'next/cache';
 

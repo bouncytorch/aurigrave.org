@@ -13,20 +13,14 @@ export enum BlogState {
     Published = 'published',
 }
 
-// "YYYYMMDDHHmmss" + "-" + title slug
-const generateBlogId = (title: string): string => {
+// "YYYYMMDDHHmmss"
+const generateBlogId = (): string => {
     const now = new Date();
     const pad = (n: number) => String(n).padStart(2, '0');
-    const date =
+    return (
         `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}` +
-        `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
-    const slug = title
-        .toLowerCase()
-        .replace(/[^a-z0-9\s]/g, '')   // strip punctuation
-        .trim()
-        .replace(/\s+/g, '-')          // spaces -> dashes
-        .slice(0, 64);
-    return `${date}-${slug}`;
+        `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`
+    );
 };
 
 // Soft-fail: the view is a cache; a stale view beats a broken write
@@ -39,11 +33,9 @@ const refreshUniqueBlogTags = async (): Promise<void> => {
     }
 };
 
-export type BlogData         = InferAttributes<Blog,         { omit: 'createdAt' | 'updatedAt' }>;
-export type BlogCreationData = InferCreationAttributes<Blog, { omit: 'createdAt' | 'updatedAt' }>;
 class Blog extends Model<
-    BlogData,
-    BlogCreationData
+    InferAttributes<Blog>,
+    InferCreationAttributes<Blog>
 > {
     declare id:          CreationOptional<string>;
     declare title:       string;
@@ -58,7 +50,7 @@ class Blog extends Model<
 
 Blog.init({
     id: {
-        type: DataTypes.STRING(79),
+        type: DataTypes.STRING(14),
         primaryKey: true,
     },
     title: {
@@ -88,7 +80,9 @@ Blog.init({
         allowNull: false,
         defaultValue: BlogState.Draft,
         validate: { isIn: [Object.values(BlogState)] },
-    }
+    },
+    createdAt: '',
+    updatedAt: ''
 }, {
     sequelize,
     modelName:    'Blog',
@@ -102,9 +96,8 @@ Blog.init({
     ],
 });
 
-// Auto-generate id from title when not explicitly provided
 Blog.beforeValidate((blog) => {
-    if (!blog.id) blog.id = generateBlogId(blog.title ?? 'untitled');
+    if (!blog.id) blog.id = generateBlogId();
 });
 
 // Refresh the unique-tags view after any write that could change tags

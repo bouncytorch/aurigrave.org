@@ -3,10 +3,13 @@ import Footer from '@/components/layout/Footer';
 import NavButtons from '@/components/layout/nav/NavButtons';
 import Linktree from '@/components/layout/linktree/Linktree';
 import YouTubeFrame from '@/components/ui/frame/YouTubeFrame';
+import styles from './page.module.css';
+import { Metadata } from 'next';
 
 import { LINKTREE_LINKS } from '@/lib/const';
 
-import styles from './page.module.css';
+export const metadata: Metadata = { title: 'bouncytorch' };
+
 export default function Home() {
     return (
         <div className={styles.wrapper}>

@@ -22,7 +22,7 @@ async function AudioContent() {
 
     return (
         <main className='reset-spacing'>
-            <h1>AUDIO CREDITS</h1>
+            <h1>AUDIO</h1>
             { SECTIONS.map(({ label, type }) => {
                 const filtered = releases.filter(v => v.type === type);
                 if (!filtered.length) return null;

@@ -83,6 +83,13 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.4em;
 }
 
+.heading-anchor {
+  margin-left: 0.4rem;
+  font-size: 1rem;
+  vertical-align: middle;
+  text-decoration: none;
+}
+
 a {
   color: var(--link);
 }
@@ -196,6 +203,16 @@ pre span[data-line] {
 /* TODO: Implement additional highlighting styles for rehype-pretty-code */
 code[data-line-numbers] {
   counter-reset: line;
+}
+
+mark {
+  background-color: #fff06dc5;
+}
+
+[data-highlighted-chars], [data-highlighted-line] {
+  background-color: #92b5ff36;
+  border-radius: 5px;
+  padding: .125rem;
 }
 
 code[data-line-numbers] > [data-line]::before {

@@ -20,13 +20,21 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     const { id } = await params;
     const p = await parent;
     const release = (await getReleases()).find(v => v.id === id);
-    if (release && p.keywords)
+
+    if (release && p.keywords) {
+        const baseUrl = getUrlBase(release.id, release.type, release.size);
         return {
             title: release.name,
             description: release.description,
-            keywords: [...release.genres, release.name.toLowerCase(), ...p.keywords],
+            keywords: [...release.genres, release.shortname.toLowerCase(), release.name.toLowerCase(), ...p.keywords],
+            alternates: {
+                canonical: `/audio/release/${release.id}`,
+            },
             openGraph: {
-                url: `https://aurigrave.org/audio/release/${release.id}`,
+                type: 'music.album',
+                url: `/audio/release/${release.id}`,
+                siteName: 'aurigrave group',
+                locale: 'en_US',
                 images: [
                     {
                         url: getUrlBase(release.id, release.type, release.size) + 'cover.webp',
@@ -35,17 +43,19 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
                         alt: `${release.name} cover art`,
                     },
                 ],
+                audio: [...release.samples.map((sample) => baseUrl + sample)]
             },
             twitter: {
                 card: 'summary_large_image',
-                images: [getUrlBase(release.id, release.type, release.size) + 'cover.webp'],
+                images: [baseUrl + 'cover.webp'],
             },
             icons: [
                 { rel: 'icon', type: 'image/webp', url: getUrlBase(release.id, release.type, release.size) + 'cover.webp' }
             ]
         };
+    }
 
-    else return { title: 'Release not found' };
+    else return notFound();
 }
 
 async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
@@ -72,17 +82,25 @@ async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify({
                     '@context': 'https://schema.org',
-                    '@type': 'MusicRelease',
-                    'name': release.name,
-                    'byArtist': {
-                        '@type': 'MusicGroup',
-                        'name': 'bouncytorch'
+                    '@type': ['MusicRelease', 'MusicAlbum'],  // dual type for broader matching
+                    name: release.name,
+                    byArtist: {
+                        '@type': 'Person',
+                        name: 'bouncytorch',
+                        url: 'https://aurigrave.org',
                     },
-                    'datePublished': release.release_date,
-                    'description': release.description,
-                    'image': baseUrl + 'cover.webp',
-                    'url': `https://aurigrave.org/audio/release/${release.id}`,
-                    'genre': release.genres,
+                    datePublished: release.release_date,
+                    description: release.description,
+                    image: baseUrl + 'cover.webp',
+                    url: `https://aurigrave.org/audio/release/${release.id}`,
+                    genre: release.genres,
+                    sameAs: links.map(v => v.link),
+                    offers: links
+                        .filter(l => ['spotify', 'camp', 'apple', 'youtube', 'cloud'].includes(l.name))
+                        .map(l => ({
+                            '@type': 'Offer',
+                            url: l.link,
+                        })),
                 } ) }}
             />
 
