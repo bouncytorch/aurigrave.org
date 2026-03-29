@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
             },
         ],
     },
-    serverExternalPackages: ['sequelize', 'pg']
+    serverExternalPackages: ['sequelize', 'pg', 'canvas']
 };
 
 export default nextConfig;

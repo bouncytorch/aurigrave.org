@@ -12,10 +12,23 @@ FROM node:${NODE_VERSION} AS dependencies
 # Set working directory
 WORKDIR /app
 
+# Install system build tools and Cairo/Pango dev headers required by the canvas package
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    python3 \
+    pkg-config \
+    libcairo2-dev \
+    libpango1.0-dev \
+    libjpeg-dev \
+    libgif-dev \
+    librsvg2-dev \
+  && rm -rf /var/lib/apt/lists/*
+
 # Copy package-related files first to leverage Docker's caching mechanism
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
 
 # Install project dependencies with frozen lockfile for reproducible builds
+# pnpm v10+ skips lifecycle scripts by default, so canvas must be rebuilt explicitly
 RUN --mount=type=cache,target=/root/.npm \
     --mount=type=cache,target=/usr/local/share/.cache/yarn \
     --mount=type=cache,target=/root/.local/share/pnpm/store \
@@ -24,7 +37,7 @@ RUN --mount=type=cache,target=/root/.npm \
   elif [ -f yarn.lock ]; then \
     corepack enable yarn && yarn install --frozen-lockfile --production=false; \
   elif [ -f pnpm-lock.yaml ]; then \
-    corepack enable pnpm && pnpm install --frozen-lockfile; \
+    corepack enable pnpm && pnpm install --frozen-lockfile && pnpm rebuild canvas; \
   else \
     echo "No lockfile found." && exit 1; \
   fi
@@ -37,6 +50,16 @@ FROM node:${NODE_VERSION} AS builder
 
 # Set working directory
 WORKDIR /app
+
+# Install canvas runtime libraries (no build tools needed — binary was compiled in dependencies stage)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libcairo2 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libjpeg62-turbo \
+    libgif7 \
+    librsvg2-2 \
+  && rm -rf /var/lib/apt/lists/*
 
 # Copy project dependencies from dependencies stage
 COPY --from=dependencies /app/node_modules ./node_modules
@@ -81,6 +104,16 @@ ENV HOSTNAME="0.0.0.0"
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the run time.
 # ENV NEXT_TELEMETRY_DISABLED=1
+
+# Install canvas runtime libraries for serve time
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libcairo2 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libjpeg62-turbo \
+    libgif7 \
+    librsvg2-2 \
+  && rm -rf /var/lib/apt/lists/*
 
 # Copy production assets
 COPY --from=builder --chown=node:node /app/public ./public
