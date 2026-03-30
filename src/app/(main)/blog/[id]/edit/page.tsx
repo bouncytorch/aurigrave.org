@@ -20,6 +20,7 @@ async function BlogEditorPageContent({ params }: { params: Promise<{ id: string 
         old_keywords={post.keywords}
         old_state={post.state}
         old_tags={post.tags}
+        old_thumbnail={post.showThumbnail}
         createdAt={post.createdAt}
     />;
 }

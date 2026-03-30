@@ -1,0 +1,33 @@
+.modal_wrapper {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: #00000093;
+    z-index: 1000;
+    border-radius: 0.3em;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-tinted);
+    min-width: 50px;
+    max-width: fit-content;
+    width: 100%;
+    gap: 6px;
+    border-radius: 0.3em;
+    padding: 10px;
+    box-sizing: content-box;
+}
+
+.modal_close {
+    align-self: flex-end;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px 10px
+}

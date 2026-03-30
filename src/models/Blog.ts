@@ -37,15 +37,16 @@ class Blog extends Model<
     InferAttributes<Blog>,
     InferCreationAttributes<Blog>
 > {
-    declare id:          CreationOptional<string>;
-    declare title:       string;
-    declare description: string;
-    declare content:     string;
-    declare keywords:    CreationOptional<string[]>;
-    declare tags:        CreationOptional<string[]>;
-    declare state:       CreationOptional<BlogState>;
-    declare createdAt:   CreationOptional<Date>;
-    declare updatedAt:   CreationOptional<Date>;
+    declare id:            CreationOptional<string>;
+    declare title:         string;
+    declare description:   string;
+    declare content:       string;
+    declare keywords:      CreationOptional<string[]>;
+    declare tags:          CreationOptional<string[]>;
+    declare showThumbnail: CreationOptional<boolean>;
+    declare state:         CreationOptional<BlogState>;
+    declare createdAt:     CreationOptional<Date>;
+    declare updatedAt:     CreationOptional<Date>;
 }
 
 Blog.init({
@@ -74,6 +75,11 @@ Blog.init({
         type: DataTypes.ARRAY(DataTypes.STRING(48)),
         allowNull: false,
         defaultValue: [],
+    },
+    showThumbnail: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
     },
     state: {
         type: DataTypes.STRING(16),

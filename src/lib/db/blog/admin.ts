@@ -4,7 +4,7 @@ import Blog, { BlogState } from '@/models/Blog';
 import { revalidateTag } from 'next/cache';
 import { requireAdmin } from '@/lib/auth';
 import { InferAttributes, InferCreationAttributes, QueryTypes } from 'sequelize';
-import { getRelativeURL, uploadFile } from '../../copyparty';
+import { getRelativeURL, uploadFile } from '../../server/copyparty';
 import sharp from 'sharp';
 import { CanvasRenderingContext2D, createCanvas, loadImage, registerFont } from 'canvas';
 import path from 'path';
@@ -18,6 +18,7 @@ function invalidate(id?: string, tags?: string[]) {
     if (tags) tags.forEach(t => revalidateTag(`blog-tag:${t}`, profile));
 }
 
+// TODO: MAKE THIS CROP IMAGE TO 16:9 OR 4:3 AT THE VERY LEAST
 async function uploadTranscodedImage(thumbnail: File, path: string) {
     const buffer = await thumbnail.arrayBuffer();
 

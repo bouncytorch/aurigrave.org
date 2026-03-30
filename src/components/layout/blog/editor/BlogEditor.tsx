@@ -11,6 +11,7 @@ import remarkGfm from 'remark-gfm';
 import { createBlog, updateBlog, uploadBlogImage } from '@/lib/db/blog/admin';
 import { BlogState } from '@/models/Blog';
 import BlogOGWrapper from '../og/BlogOG';
+import ThumbnailCropModal from '@/components/layout/blog/editor/ThumbnailCropModal';
 import type { ICommand } from '@uiw/react-md-editor';
 import { redirect } from 'next/navigation';
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
@@ -44,6 +45,7 @@ export default function BlogEditorContents({
     old_tags     = [],
     old_keywords = [],
     old_state    = 'draft' as BlogState,
+    old_thumbnail = false,
     createdAt    = new Date(),
 }: {
     id?:           string
@@ -53,6 +55,7 @@ export default function BlogEditorContents({
     old_desc?:     string
     old_content?:  string
     old_state?:    BlogState
+    old_thumbnail?: boolean
     createdAt?:    Date
 }) {
     // fields
@@ -63,6 +66,8 @@ export default function BlogEditorContents({
     const [keywords,  setKeywords]  = useState(old_keywords);
     const [state,     setState]     = useState(old_state);
     const [thumbnail, setThumbnail] = useState<File | undefined>();
+    const [showThumbnail,  setShowThumbnail]  = useState(old_thumbnail);
+    const [cropFile,  setCropFile] = useState<File | undefined>();
 
     // misc
     const { resolvedTheme }       = useTheme();
@@ -189,6 +194,7 @@ export default function BlogEditorContents({
                     content,
                     tags,
                     keywords,
+                    showThumbnail,
                     state
                 };
 
@@ -245,17 +251,23 @@ export default function BlogEditorContents({
                     </p>
 
                     <p>
+                        <label htmlFor="show-thumbnail">show thumbnail: </label>
+                        <input
+                            type="checkbox" id="show-thumbnail"
+                            checked={showThumbnail}
+                            onChange={(e) => setShowThumbnail(e.target.checked)}
+                        />
+                    </p>
+
+                    <p>
                         <label htmlFor="thumbnail">thumbnail: </label>
                         <input
                             type="file" name="thumbnail" id="thumbnail"
                             accept="image/*"
                             onChange={(e) => {
                                 const file = e.target.files?.[0];
-                                if (file) {
-                                    if (thumbnailPreview) URL.revokeObjectURL(thumbnailPreview);
-                                    setThumbnail(file);
-                                    setThumbnailPreview(URL.createObjectURL(file));
-                                }
+                                if (file) setCropFile(file);   // open modal instead of setting directly
+                                e.target.value = '';           // allow re-selecting the same file later
                             }}
                         />
                     </p>
@@ -393,6 +405,18 @@ export default function BlogEditorContents({
                 <p><input type="submit" value={result} /></p>
                 <pre data-language='json'>{response}</pre>
             </form>
+            {cropFile && (
+                <ThumbnailCropModal
+                    file={cropFile}
+                    onConfirm={(croppedFile) => {
+                        if (thumbnailPreview.startsWith('blob:')) URL.revokeObjectURL(thumbnailPreview);
+                        setThumbnail(croppedFile);
+                        setThumbnailPreview(URL.createObjectURL(croppedFile));
+                        setCropFile(undefined);
+                    }}
+                    onCancel={() => setCropFile(undefined)}
+                />
+            )}
         </main>
     );
 }
