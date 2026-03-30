@@ -44,7 +44,7 @@ module.exports = {
             }
         } catch (err) {
             // Only rollback if the first transaction wasn't already committed.
-            try { await transaction.rollback(); } catch (_) { /* already committed */ }
+            try { await transaction.rollback(); } catch { /* already committed */ }
             throw err;
         }
     },

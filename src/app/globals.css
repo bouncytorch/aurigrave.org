@@ -1,7 +1,10 @@
 * {
+  box-sizing: border-box;
+}
+
+.reset-spacing *:not(.keep-spacing):not(button):not(input):not(h1) {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 .transitions-enabled * {
@@ -55,7 +58,6 @@ html {
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;
-  position: relative;
 }
 
 body {
@@ -63,9 +65,7 @@ body {
   font-weight: var(--font-weight);
   font-size: var(--font-size);
   color: var(--stroke);
-  font-family: var(--font);
   min-height: 100vh;
-
 }
 
 h1 {
@@ -74,6 +74,18 @@ h1 {
 
 h2 {
   font-weight: 800;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+
+.heading-anchor {
+  margin-left: 0.4rem;
+  font-size: 1rem;
+  vertical-align: middle;
+  text-decoration: none;
 }
 
 a {
@@ -88,7 +100,7 @@ input {
   margin: 0 0.2em;
 }
 
-button, input[type='button'] {
+button, input[type='button'], input[type='submit'] {
   color: var(--stroke);
   font-family: var(--font);
   font-size: 1em;
@@ -102,12 +114,12 @@ button, input[type='button'] {
 }
 
 @media (hover: hover) {
-  button:hover:not(:disabled), input[type='button']:hover:not(:disabled) {
+  button:hover:not(:disabled), input[type='button']:hover:not(:disabled), input[type='submit']:hover:not(:disabled) {
     background-color: var(--background-inverted);
     color: var(--stroke-inverted);
   }
 
-  button:active:hover:not(:disabled), input[type='button']:active:hover:not(:disabled) {
+  button:active:hover:not(:disabled), input[type='button']:active:hover:not(:disabled), input[type='submit']:active:hover:not(:disabled) {
     scale: 0.9;
   }
 }
@@ -118,14 +130,161 @@ button:disabled, input[type='button']:disabled {
 }
 
 input[type='checkbox'] {
-  /* TODO: style the checkbox */
-  /* appearance: none;
-  background: var(--background-tinted); */
-  width: 1.5em;
-  height: 1.5em;
+  width: 1em;
+  height: 1em;
+}
+
+input[type='checkbox']:not(:active) {
+  cursor: pointer;
+}
+
+input[type='radio'] {
+  width: 1em;
+  height: 1em;
+}
+
+input[type='radio']:not(:active) {
+  cursor: pointer;
 }
 
 footer {
   font-size: 0.9em;
   opacity: 0.6;
+}
+
+pre {
+  background: #212130;
+  padding: 0.5em;
+  border-radius: 0.2em;
+  color: #FFF;
+  font-size: 0.8em;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+pre::before {
+  content: attr(data-language);
+  opacity: 0.4;
+  font-size: 0.8em;
+  display: block;
+}
+
+/* Fix for the word overflow in rehype-pretty-code pre-s */
+pre code {
+  min-width: 0;
+  max-width: 100%;
+}
+
+pre span[data-line] {
+  min-width: 0;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Fix for MDEditor */
+.w-md-editor pre,
+.wmde-markdown pre {
+  background: unset;
+  color: unset;
+  padding: unset;
+  border-radius: unset;
+  white-space: unset;
+  overflow-wrap: unset;
+}
+
+.w-md-editor pre::before,
+.wmde-markdown pre::before {
+  content: none;
+}
+
+/* rehype-pretty-code styles */
+/* TODO: Implement additional highlighting styles for rehype-pretty-code */
+code[data-line-numbers] {
+  counter-reset: line;
+}
+
+mark {
+  background-color: #fff06dc5;
+}
+
+[data-highlighted-chars], [data-highlighted-line] {
+  background-color: #92b5ff36;
+  border-radius: 5px;
+  padding: .125rem;
+}
+
+code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 0.75rem;
+  margin-right: 1em;
+  text-align: right;
+  color: gray;
+}
+
+code[data-line-numbers-max-digits="2"] > [data-line]::before {
+  width: 1.25rem;
+}
+
+code[data-line-numbers-max-digits="3"] > [data-line]::before {
+  width: 1.75rem;
+}
+
+code[data-line-numbers-max-digits="4"] > [data-line]::before {
+  width: 2.25rem;
+}
+
+figure[data-rehype-pretty-code-figure] {
+  margin: 0;
+}
+/* rehype-pretty-code styles */
+
+blockquote {
+  position: relative;
+}
+
+blockquote::before {
+  content: '@';
+  color: #00000000;
+  opacity: 0.2;
+  position: absolute;
+  width: 0.5em;
+  height: 110%;
+  left: -1em;
+  top: -5%;
+  background: var(--background-inverted);
+}
+
+label {
+  vertical-align: top;
+}
+
+img, input, textarea {
+  max-width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  field-sizing: content;
+}
+
+input[type='text'], textarea {
+  background: var(--background-tinted);
+  border: none;
+  min-width: 100px;
+}
+
+textarea {
+  width:max-content;
+  field-sizing: content;
+  resize: none;
+}
+
+fieldset {
+  min-width: 0;
+  max-width: 100%;
+}
+
+select {
+  font-size: inherit;
+  border: none;
 }

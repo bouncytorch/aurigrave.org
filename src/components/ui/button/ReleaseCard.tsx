@@ -16,7 +16,7 @@ export default function ReleaseCard({ release }: { release: InferAttributes<Rele
     return <Link className={styles.releaseCardLink} href={`/audio/release/${release.id}`}>
         <button className={styles.releaseCard}>
             <CoverImage src={getUrlBase(release.id, release.type, release.size) + 'cover.webp'} alt={`${release.name} cover`} size={500}/>
-            <div className={styles.releaseCardDetails}>
+            <div className={`${styles.releaseCardDetails} keep-spacing`}>
                 <p style={{ fontWeight: 400 }}>{release.shortname}</p>
                 <p style={{ fontSize: '0.8em', opacity: 0.6 }}>
                     {release.release_date ? new Date(release.release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '(TBA)'}<br/>

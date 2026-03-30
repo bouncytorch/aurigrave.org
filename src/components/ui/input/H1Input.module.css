@@ -1,0 +1,11 @@
+.h1input {
+    width: 100%;
+    field-sizing: content;
+    resize: none;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-family: inherit;
+    font-size: 2em;
+    border: none;
+    background: var(--background-tinted);
+}

@@ -19,7 +19,8 @@ class Release extends Model<InferAttributes<Release>, InferCreationAttributes<Re
     declare type:               ReleaseType | null;
     declare size:               ReleaseSize;
     declare name:               string;
-    declare release_date:       string | null;
+    // TODO: I do not remember why this was string. Need to figure out where exactly this was breaking
+    declare release_date:       Date | null;
     declare shortname:          string;
     declare description:        string | null;
     declare genres:             string[];

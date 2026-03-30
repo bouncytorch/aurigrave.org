@@ -1,6 +1,6 @@
 import Loading from '@/components/layout/Loading';
 import ReleaseCardList from '@/components/layout/ReleaseCardList';
-import { getReleases } from '@/lib/releases';
+import { getReleases } from '@/lib/db/releases';
 import { ReleaseType } from '@/models/Release';
 import { Metadata } from 'next';
 import { connection } from 'next/server';
@@ -21,23 +21,23 @@ async function AudioContent() {
     const releases = await getReleases();
 
     return (
-        <main>
-            <h1>AUDIO CREDITS</h1>
-            {SECTIONS.map(({ label, type }) => {
+        <main className='reset-spacing'>
+            <h1>AUDIO</h1>
+            { SECTIONS.map(({ label, type }) => {
                 const filtered = releases.filter(v => v.type === type);
                 if (!filtered.length) return null;
                 return (
-                    <section key={label}>
-                        <h2 style={{padding:'0.2em 0'}}>{label}</h2>
+                    <section key={ label }>
+                        <h2 style={{ padding:'0.2em 0' }}>{label}</h2>
                         <ReleaseCardList releases={filtered} />
                     </section>
                 );
-            })}
+            }) }
         </main>
     );
 }
 
-export default function Audio() {
+export default async function Audio() {
     return (
         <Suspense fallback={<Loading />}>
             <AudioContent />
