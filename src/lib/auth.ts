@@ -6,16 +6,16 @@ function getClientIp(h: Awaited<ReturnType<typeof headers>>): string | null {
         ?? h.get('x-real-ip');
 }
 
-export async function requireAdmin(): Promise<void> {
-    const whitelist = (process.env['ADMIN_IP_WHITELIST'] ?? '')
-        .split(',')
-        .map(ip => ip.trim())
-        .filter(Boolean);
+const WHITELIST = (process.env['ADMIN_IP_WHITELIST'] ?? '')
+    .split(',')
+    .map(ip => ip.trim())
+    .filter(Boolean);
 
-    if (whitelist.length === 0)
+export async function requireAdmin(): Promise<void> {
+    if (WHITELIST.length === 0)
         throw new Error('ADMIN_IP_WHITELIST is not configured');
 
     const ip = getClientIp(await headers());
-    if (!ip || !whitelist.includes(ip))
+    if (!ip || !WHITELIST.includes(ip))
         throw new Error('Unauthorized');
 }
