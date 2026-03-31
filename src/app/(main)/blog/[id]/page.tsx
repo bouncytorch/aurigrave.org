@@ -13,8 +13,11 @@ import remarkSupersub from 'remark-supersub';
 import BlogShareButton from '@/components/ui/button/blog/BlogShareButton';
 import Image from 'next/image';
 import { getRelativeURL } from '@/lib/server/copyparty';
+import rehypeRaw from 'rehype-raw';
 
 import type { Metadata, ResolvingMetadata } from 'next';
+import BackButton from '@/components/ui/button/blog/BackButton';
+import { getAnyBlog } from '@/lib/db/blog/admin';
 
 export async function generateMetadata(
     { params }: { params: Promise<{ id: string }> },
@@ -58,7 +61,9 @@ export async function generateMetadata(
 
 async function BlogPostContent({ params }: { params: Promise<{ id: string }> }) {
     const props = await params;
-    const post = await getPublicBlog(props.id);
+    let post;
+    try { post = await getAnyBlog(props.id); }
+    catch { post = await getPublicBlog(props.id); }
 
     if (!post)
         return <MainError />;
@@ -67,6 +72,12 @@ async function BlogPostContent({ params }: { params: Promise<{ id: string }> }) 
     return <>
         <h1 style={{ marginBottom: '0.1em' }}>{post.title}</h1>
         <p style={{ fontWeight: 300, marginTop: 0, fontSize: '1.3em' }}>{post.description}</p>
+        <div style={{ marginBottom: '1em', display: 'flex', justifyContent: 'space-between' }}>
+            <BackButton />
+            <Suspense>
+                <BlogEditButton />
+            </Suspense>
+        </div>
         {post.showThumbnail && (
             <div style={{
                 position: 'relative',
@@ -118,6 +129,7 @@ async function BlogPostContent({ params }: { params: Promise<{ id: string }> }) 
             ]}
             rehypePlugins={[
                 [rehypePrettyCode, { theme: 'github-dark-dimmed' }],
+                rehypeRaw,
                 rehypeSlug,
                 [rehypeAutolinkHeadings, {
                     behavior: 'append',

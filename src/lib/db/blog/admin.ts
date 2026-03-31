@@ -19,7 +19,7 @@ function invalidate(id?: string, tags?: string[]) {
 }
 
 // TODO: MAKE THIS CROP IMAGE TO 16:9 OR 4:3 AT THE VERY LEAST
-async function uploadTranscodedImage(thumbnail: File, path: string) {
+async function uploadTranscodedImage(thumbnail: File, path: string, replace = true) {
     const buffer = await thumbnail.arrayBuffer();
 
     const webpBuffer = await sharp(buffer)
@@ -30,7 +30,7 @@ async function uploadTranscodedImage(thumbnail: File, path: string) {
         type: 'image/webp',
     });
 
-    return await uploadFile(transcoded, path, true);
+    return await uploadFile(transcoded, path, replace);
 }
 
 registerFont(path.join(process.cwd(), 'public/fonts/Archivo-Black.ttf'), {
@@ -267,7 +267,7 @@ export async function deleteBlog(id: string) {
 
 export async function uploadBlogImage(id: string, image: File) {
     await requireAdmin();
-    return await uploadTranscodedImage(image, `/bouncytorch/blog/${id}/${image.name.replace(/\.[^/.]+$/, '') + '.webp'}`);
+    return await uploadTranscodedImage(image, `/bouncytorch/blog/${id}/${image.name.replace(/\.[^/.]+$/, '') + '.webp'}`, false);
 }
 
 export async function getAnyBlog(id: string) {
@@ -286,4 +286,10 @@ export async function searchAllBlogs(term: string, state?: BlogState) {
          ORDER  BY rank DESC, "createdAt" DESC`,
         { replacements: { term, ...(state && { state }) }, type: QueryTypes.SELECT },
     );
+}
+
+export async function getAllBlogs(limit = 10, offset = 0) {
+    await requireAdmin();
+    return await Blog.findAndCountAll({ limit, offset })
+        .then(r => ({ rows: r.rows.map(v => v.toJSON()), count: r.count }));
 }

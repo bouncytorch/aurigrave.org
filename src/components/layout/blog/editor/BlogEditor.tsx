@@ -19,7 +19,7 @@ import { remarkMark } from 'remark-mark-highlight';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import remarkSupersub from 'remark-supersub';
-
+import rehypeRaw from 'rehype-raw';
 // TODO: Not important, but maybe clean this up a little bit later
 
 // icon rendered inside the toolbar button
@@ -370,6 +370,7 @@ export default function BlogEditorContents({
                             ]}
                             rehypePlugins={[
                                 [rehypePrettyCode, { theme: 'github-dark-dimmed' }],
+                                rehypeRaw,
                                 rehypeSlug,
                                 [rehypeAutolinkHeadings, {
                                     behavior: 'append',
