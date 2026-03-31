@@ -67,7 +67,7 @@ Blog.init({
         allowNull: false,
     },
     keywords: {
-        type: DataTypes.ARRAY(DataTypes.STRING(32)),
+        type: DataTypes.ARRAY(DataTypes.STRING(72)),
         allowNull: false,
         defaultValue: [],
     },

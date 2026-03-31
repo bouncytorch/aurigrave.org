@@ -237,7 +237,7 @@ export default function BlogEditorContents({
                     />
 
                     <p>
-                        <label htmlFor="keywords">tags: </label>
+                        <label htmlFor="tags">tags: </label>
                         <textarea
                             placeholder='tags' name="tags" id="tags"
                             value={tags.join(',')}
