@@ -5,8 +5,10 @@ import BlogEditor from '@/components/layout/blog/editor/BlogEditor';
 
 async function PostEditorContent() {
     try { await requireAdmin(); }
-    catch {
-        return <MainError title='UNAUTHORIZED' desc="You do not have access to this page" />;
+    catch(err) {
+        if (err === 'Unauthorized')
+            return <MainError title='UNAUTHORIZED' desc="You do not have access to this page" />;
+        return <MainError title="ERROR" desc={String(err)} />;
     }
 
     return <BlogEditor />;

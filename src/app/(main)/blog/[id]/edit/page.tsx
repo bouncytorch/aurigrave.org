@@ -6,8 +6,10 @@ import { getAnyBlog } from '@/lib/db/blog/admin';
 
 async function BlogEditorPageContent({ params }: { params: Promise<{ id: string }> }) {
     try { await requireAdmin(); }
-    catch {
-        return <MainError title='UNAUTHORIZED' desc="You do not have access to this page" />;
+    catch(err) {
+        if (err === 'Unauthorized')
+            return <MainError title='UNAUTHORIZED' desc="You do not have access to this page" />;
+        return <MainError title="ERROR" desc={String(err)} />;
     }
 
     const post = await getAnyBlog((await params).id);
