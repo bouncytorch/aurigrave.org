@@ -74,9 +74,7 @@ async function BlogPostContent({ params }: { params: Promise<{ id: string }> }) 
         <p style={{ fontWeight: 300, marginTop: 0, fontSize: '1.3em' }}>{post.description}</p>
         <div style={{ marginBottom: '1em', display: 'flex', justifyContent: 'space-between' }}>
             <BackButton />
-            <Suspense>
-                <BlogEditButton id={post.id} />
-            </Suspense>
+            <BlogEditButton id={post.id} />
         </div>
         {post.showThumbnail && (
             <div style={{
@@ -140,7 +138,6 @@ async function BlogPostContent({ params }: { params: Promise<{ id: string }> }) 
         >
             {post.content}
         </MarkdownAsync>
-        <BlogEditButton id={post.id} />
     </>;
 }
 

@@ -20,6 +20,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import remarkSupersub from 'remark-supersub';
 import rehypeRaw from 'rehype-raw';
+import BackButton from '@/components/ui/button/blog/BackButton';
 // TODO: Not important, but maybe clean this up a little bit later
 
 // icon rendered inside the toolbar button
@@ -173,6 +174,9 @@ export default function BlogEditorContents({
 
     return (
         <main>
+            <div style={{ marginBottom: '1em', display: 'flex', justifyContent: 'space-between' }}>
+                <BackButton />
+            </div>
             {/* Hidden file picker - sits outside the form intentionally */}
             <input
                 ref={imageFileInputRef}
