@@ -2,8 +2,10 @@ import { Suspense } from 'react';
 import { requireAdmin } from '@/lib/auth';
 import MainError from '@/components/layout/MainError';
 import BlogEditor from '@/components/layout/blog/editor/BlogEditor';
+import { connection } from 'next/server';
 
 async function PostEditorContent() {
+    await connection();
     try { await requireAdmin(); }
     catch(err) {
         if (err instanceof Error && err.message === 'Unauthorized')
