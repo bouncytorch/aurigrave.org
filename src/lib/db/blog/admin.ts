@@ -212,12 +212,12 @@ export async function createBlog(data: InferCreationAttributes<Blog, { omit: 'id
         await uploadTranscodedImage(thumbnail, `/bouncytorch/blog/thumbnails/${blog.id}.webp`);
         await uploadFile(new File([new Uint8Array(
             await renderOG(blog.title, blog.description, blog.createdAt, thumbnail)
-        )], ''), `/bouncytorch/blog/og/${blog.id}.png`);
+        )], ''), `/bouncytorch/blog/og/${blog.id}.png`, true);
     }
     else {
         await uploadFile(new File([new Uint8Array(
             await renderOG(blog.title, blog.description, blog.createdAt)
-        )], ''), `/bouncytorch/blog/og/${blog.id}.png`);
+        )], ''), `/bouncytorch/blog/og/${blog.id}.png`, true);
     }
 
     return blog.toJSON();
@@ -246,11 +246,11 @@ export async function updateBlog(id: string, data: Partial<InferAttributes<Blog>
             await uploadTranscodedImage(thumbnail, `/bouncytorch/blog/thumbnails/${blog.id}.webp`);
             await uploadFile(new File([new Uint8Array(
                 await renderOG(blog.title, blog.description, blog.createdAt, thumbnail)
-            )], ''), `/bouncytorch/blog/og/${blog.id}.png`);
+            )], ''), `/bouncytorch/blog/og/${blog.id}.png`, true);
         } else {
             await uploadFile(new File([new Uint8Array(
                 await renderOG(blog.title, blog.description, blog.createdAt, blog.id)
-            )], ''), `/bouncytorch/blog/og/${blog.id}.png`);
+            )], ''), `/bouncytorch/blog/og/${blog.id}.png`, true);
         }
     }
 
