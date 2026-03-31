@@ -75,7 +75,7 @@ async function BlogPostContent({ params }: { params: Promise<{ id: string }> }) 
         <div style={{ marginBottom: '1em', display: 'flex', justifyContent: 'space-between' }}>
             <BackButton />
             <Suspense>
-                <BlogEditButton />
+                <BlogEditButton id={post.id} />
             </Suspense>
         </div>
         {post.showThumbnail && (

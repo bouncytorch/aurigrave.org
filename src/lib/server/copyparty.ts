@@ -37,13 +37,14 @@ export async function uploadFile(file: File, remote: string, replace = false): P
 
     // PUT upload
     const url = `${addr!.replace(/\/$/, '')}/${remote.replace(/^\//, '')}`;
+    const headers: { [key: string]: string } = {
+        'PW': `${user}:${pass}`,
+        'Accept': 'json',
+    };
+    if (replace) headers['Replace'] = '1';
     const res = await fetch(url, {
         method: 'PUT',
-        headers: {
-            'PW': `${user}:${pass}`,
-            'Accept': 'json',
-            'Replace': replace ? '1' : '0'
-        },
+        headers,
         body: buffer,
     });
 
