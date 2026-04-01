@@ -1,12 +1,13 @@
 .button-content {
-    container-type: inline-size;
-    container-name: btn;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.icon-view  { display: none; }
-.label-view { display: inline; }
+.icon-view {
+    display: none;
+}
 
-@container btn (max-width: var(--icon-breakpoint)) {
-    .icon-view  { display: inline; }
-    .label-view { display: none; }
+.label-view {
+    display: inline;
 }

@@ -17,7 +17,7 @@ export default function Home() {
                 <main className={`${styles.main} reset-spacing`}>
                     <h1 style={{ margin: 0 }}><Logo /></h1>
                     <h2>bouncytorch</h2>
-                    <NavButtons iconBreakpoint='300px' />
+                    <NavButtons />
                     <p>portfolio reel:</p>
                     <YouTubeFrame link="https://www.youtube.com/embed/1jF1c8nP-JY"/>
                     <p>links:</p>

@@ -11,9 +11,14 @@
 .body {
     background: var(--background-alpha);
     background-blend-mode: var(--backdrop-blend);
-    backdrop-filter: blur(10px);
     border-radius: 1em;
     padding: 3rem 2rem;
+}
+
+@media (min-width: 768px) {
+    .body {
+        backdrop-filter: blur(10px);
+    }
 }
 
 .main {

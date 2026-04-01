@@ -7,13 +7,15 @@
   padding: 0;
 }
 
-.transitions-enabled * {
-  transition:
-    color            0.01s linear,
-    background-color 0.1s linear,
-    fill             0.1s linear,
-    scale            0.05s linear,
-    border-color     0.1s linear;
+@media (prefers-reduced-motion: no-preference) {
+  .transitions-enabled * {
+    transition:
+      color            0.01s linear,
+      background-color 0.1s linear,
+      fill             0.1s linear,
+      scale            0.05s linear,
+      border-color     0.1s linear;
+  }
 }
 
 :root {
@@ -54,10 +56,16 @@ html {
   background-color: var(--backdrop-tint);
   background-image: var(--backdrop-image);
   background-blend-mode: var(--backdrop-blend);
-  background-attachment: fixed;
+  background-attachment: scroll;
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;
+}
+
+@media (min-width: 768px) {
+  html {
+    background-attachment: fixed;
+  }
 }
 
 body {

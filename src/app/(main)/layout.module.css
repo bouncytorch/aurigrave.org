@@ -4,6 +4,11 @@
     max-width: var(--body-max-width);
     background: var(--background-alpha);
     background-blend-mode: var(--backdrop-blend);
-    backdrop-filter: blur(10px);
     border-radius: 0.3em;
+}
+
+@media (min-width: 768px) {
+    .main {
+        backdrop-filter: blur(10px);
+    }
 }
