@@ -72,7 +72,7 @@ export default function ThumbnailCropModal({ file, onConfirm, onCancel }: Props)
     }
 
     return (
-        <Modal onClose={() => onCancel()}>
+        <Modal onCloseAction={() => onCancel()}>
             <p style={{ margin: 0, fontWeight: 600 }}>Crop thumbnail</p>
 
             {/* No `aspect` prop → completely free-form */}

@@ -6,7 +6,7 @@ import styles from './Modal.module.css';
 
 const emptySubscribe = () => () => {};
 
-export default function Modal({ children, onClose }: { children: React.ReactNode, onClose: () => void }) {
+export default function Modal({ children, onCloseAction }: { children: React.ReactNode, onCloseAction: () => void }) {
     const isClient = useSyncExternalStore(
         emptySubscribe,
         () => true,
@@ -18,7 +18,7 @@ export default function Modal({ children, onClose }: { children: React.ReactNode
     return createPortal(
         <div className={styles.modal_wrapper}>
             <div className={styles.modal}>
-                <button className={styles.modal_close} onClick={onClose}>✕</button>
+                <button className={styles.modal_close} onClick={onCloseAction}>✕</button>
                 {children}
             </div>
         </div>,

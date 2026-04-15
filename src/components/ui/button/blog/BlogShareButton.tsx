@@ -13,7 +13,7 @@ export default function BlogShareButton({ id }: { id: string }) {
     // TODO: Fix the hardcoded url here
     const url = `https://aurigrave.org/blog/${id}`;
     return <section>
-        { showModal && <Modal onClose={() => setShowModal(false)}>
+        { showModal && <Modal onCloseAction={() => setShowModal(false)}>
             <div style={{
                 display: 'flex',
                 gap: '5px',

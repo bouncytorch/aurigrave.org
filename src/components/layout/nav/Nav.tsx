@@ -7,7 +7,7 @@ export default function Nav() {
     return <nav className={style.nav}>
         <Logo />
         <Suspense fallback={<div className={style['nav-buttons']} />}>
-            <NavButtons iconBreakpoint='350px' />
+            <NavButtons />
         </Suspense>
     </nav>;
 }
