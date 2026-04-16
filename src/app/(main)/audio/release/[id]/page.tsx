@@ -8,6 +8,8 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { notFound } from 'next/navigation';
 import YouTubeFrame from '@/components/ui/frame/YouTubeFrame';
 
+import Markdown from 'react-markdown';
+
 import CoverImage from '@/components/ui/CoverImage';
 import { Suspense } from 'react';
 
@@ -114,7 +116,7 @@ async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
                         : '(TBA)'
                 }
             </p>
-            <p>{release.description}</p>
+            <Markdown>{release.description}</Markdown>
             <div style={{
                 display: 'flex',
                 gap: '1em',
