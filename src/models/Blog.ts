@@ -106,6 +106,24 @@ Blog.beforeValidate((blog) => {
     if (!blog.id) blog.id = generateBlogId();
 });
 
+Blog.beforeUpdate((blog) => {
+    if (blog.changed('state')) {
+        const previousState = blog.previous('state');
+        const newState = blog.getDataValue('state');
+        
+        // Update createdAt to now when published/unlisted from draft
+        if (previousState === BlogState.Draft && (newState === BlogState.Published || newState === BlogState.Unlisted)) {
+            blog.setDataValue('createdAt', new Date());
+            blog.changed('createdAt', true);
+        }
+        
+        // Prevent reverting back to draft
+        if (previousState !== BlogState.Draft && newState === BlogState.Draft) {
+            throw new Error('Cannot revert a published or unlisted post back to draft.');
+        }
+    }
+});
+
 // Refresh the unique-tags view after any write that could change tags
 Blog.afterSave(refreshUniqueBlogTags);
 Blog.afterDestroy(refreshUniqueBlogTags);

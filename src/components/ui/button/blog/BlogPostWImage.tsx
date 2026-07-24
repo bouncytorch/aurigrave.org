@@ -4,6 +4,8 @@ import styles from './BlogPost.module.css';
 
 import Link from 'next/link';
 
+import LocalTime from '@/components/ui/LocalTime';
+
 export default function BlogPostWImage({ id, title, description, createdAt, tags, author }: { id: string, title: string, description: string, createdAt: Date, tags: string[], author: string }) {
     return <Link
         href={`/blog/${id}`}
@@ -13,15 +15,7 @@ export default function BlogPostWImage({ id, title, description, createdAt, tags
             <div>
                 {tags.slice(0, 3).map((tag, index) => <div key={index} className={styles.tag}>{tag}</div>)}
             </div>
-            <span>{createdAt.toLocaleString('en-US', {
-                month: 'long',
-                day: 'numeric',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            })}</span>
+            <span><LocalTime date={createdAt} /></span>
         </div>
 
         <span>

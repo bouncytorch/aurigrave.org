@@ -93,6 +93,9 @@ function wrapText(
     };
 }
 
+/**
+ * Render the OG image for a blog post using canvas (light theme)
+ */
 async function renderOG(title: string, description: string, createdAt: Date, idOrImage?: File | string, author: string = 'bouncytorch') {
     const width = 1200,
         height = 700,
@@ -111,6 +114,7 @@ async function renderOG(title: string, description: string, createdAt: Date, idO
         let buffer;
 
         if (idOrImage) {
+            // render thumbnail image as background (cover)
             if (idOrImage instanceof File) {
                 buffer = await idOrImage.arrayBuffer();
             }

@@ -1,5 +1,7 @@
 import styles from './BlogOG.module.css';
 
+import LocalTime from '@/components/ui/LocalTime';
+
 export function BlogOG({ title, description, createdAt, image, author = 'bouncytorch' }: {
     title: string
     description: string
@@ -17,15 +19,7 @@ export function BlogOG({ title, description, createdAt, image, author = 'bouncyt
         </div>
         <div>
             <div>by {author}</div>
-            <div>{createdAt.toLocaleString('en-US', {
-                month: 'long',
-                day: 'numeric',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            })}</div>
+            <div><LocalTime date={createdAt} /></div>
         </div>
     </div>;
 }

@@ -18,6 +18,7 @@ import rehypeRaw from 'rehype-raw';
 import type { Metadata, ResolvingMetadata } from 'next';
 import BackButton from '@/components/ui/button/blog/BackButton';
 import { getAnyBlog } from '@/lib/db/blog/admin';
+import LocalTime from '@/components/ui/LocalTime';
 
 export async function generateMetadata(
     { params }: { params: Promise<{ id: string }> },
@@ -95,25 +96,9 @@ async function BlogPostContent({ params }: { params: Promise<{ id: string }> }) 
         <p style={{ fontWeight: '100', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
             <span>by bouncytorch</span>
             <span style={{ textAlign:'right' }}>
-                {post.createdAt.toLocaleString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: false
-                })}
+                <LocalTime date={post.createdAt} />
                 {post.createdAt !== post.updatedAt
-                && <span style={{ opacity: 0.4 }}><br/>(edited) {post.updatedAt.toLocaleString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: false
-                })}
+                && <span style={{ opacity: 0.4 }}><br/>(edited) <LocalTime date={post.updatedAt} />
                 </span>}
             </span>
         </p>

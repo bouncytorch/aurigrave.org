@@ -349,9 +349,9 @@ export default function BlogEditorContents({
                             id="state" name="state" value={state}
                             onChange={(e) => setState(e.target.value as typeof state)}
                         >
-                            <option>draft</option>
-                            <option>unlisted</option>
-                            <option>published</option>
+                            {old_state === 'draft' && <option value="draft">draft</option>}
+                            <option value="unlisted">unlisted</option>
+                            <option value="published">published</option>
                         </select>
                     </p>
                 </fieldset>
