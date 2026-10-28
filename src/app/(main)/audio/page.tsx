@@ -1,10 +1,9 @@
-import Loading from '@/components/layout/Loading';
+export const dynamic = 'force-dynamic';
+
 import ReleaseCardList from '@/components/layout/ReleaseCardList';
 import { getReleases } from '@/lib/db/releases';
 import { ReleaseType } from '@/models/Release';
 import { Metadata } from 'next';
-import { connection } from 'next/server';
-import { Suspense } from 'react';
 
 export const metadata: Metadata = { title: 'bobsy\'s audio' };
 
@@ -16,8 +15,7 @@ const SECTIONS: { label: string; type: ReleaseType | null }[] = [
     { label: 'LEGACY RELEASES',     type: ReleaseType.Legacy }
 ];
 
-async function AudioContent() {
-    await connection();
+export default async function Audio() {
     const releases = await getReleases();
 
     return (
@@ -34,13 +32,5 @@ async function AudioContent() {
                 );
             }) }
         </main>
-    );
-}
-
-export default async function Audio() {
-    return (
-        <Suspense fallback={<Loading />}>
-            <AudioContent />
-        </Suspense>
     );
 }

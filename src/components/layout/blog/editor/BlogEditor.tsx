@@ -21,7 +21,6 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import remarkSupersub from 'remark-supersub';
 import rehypeRaw from 'rehype-raw';
 import BackButton from '@/components/ui/button/blog/BackButton';
-// TODO: Not important, but maybe clean this up a little bit later
 
 // icon rendered inside the toolbar button
 const UploadImageIcon = (
@@ -81,14 +80,6 @@ export default function BlogEditorContents({
     const [thumbnailPreview, setThumbnailPreview] = useState(
         id ? `https://files.aurigrave.org/bouncytorch/blog/thumbnails/${id}.webp` : ''
     );
-
-    useEffect(() => {
-        if (id) {
-            setThumbnailPreview(
-                `https://files.aurigrave.org/bouncytorch/blog/thumbnails/${id}.webp?t=${Date.now()}`
-            );
-        }
-    }, [id]);
 
     useEffect(() => {
         return () => { if (thumbnailPreview) URL.revokeObjectURL(thumbnailPreview); };

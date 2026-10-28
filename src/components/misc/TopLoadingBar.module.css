@@ -1,0 +1,16 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 999999;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.bar {
+    height: 100%;
+    background: var(--stroke);
+    transition: width 0.2s ease-out;
+}

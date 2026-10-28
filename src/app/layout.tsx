@@ -8,6 +8,7 @@ config.autoAddCss = false;
 
 import { ThemeProvider } from 'next-themes';
 import TransitionsEnabler from '@/components/misc/TransitionsEnabler';
+import MediaTransitionHandler from '@/components/misc/MediaTransitionHandler';
 import { LINKTREE_LINKS } from '@/lib/const';
 
 const archivo = Archivo({ subsets: ['latin', 'latin-ext'], weight: 'variable', axes: ['wdth'], display:'swap' });
@@ -85,6 +86,7 @@ export default function RootLayout({
             />
             <ThemeProvider attribute={'class'} enableSystem>
                 <TransitionsEnabler />
+                <MediaTransitionHandler />
                 {children}
             </ThemeProvider>
         </body>
