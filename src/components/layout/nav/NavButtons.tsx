@@ -9,6 +9,6 @@ export default function NavButtons() {
     const path = usePathname();
     return <div className={styles['nav-buttons']}>
         <LinkButton label='audio' href='/audio' disabled={path === '/audio'} icon={faVolumeHigh} />
-        <LinkButton label='blog' href='/blog' disabled  icon={faQuoteRight} />
+        <LinkButton label='blog' href='/blog' disabled={path === '/blog'}  icon={faQuoteRight} />
     </div>;
 }
