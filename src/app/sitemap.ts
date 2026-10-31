@@ -1,9 +1,9 @@
-export const dynamic = 'force-dynamic';
-
 import { getPublishedBlogs } from '@/lib/db/blog/internal';
 import { getReleases } from '@/lib/db/releases';
+import { connection } from 'next/server';
 
 export default async function sitemap() {
+    await connection();
     const baseUrl = 'https://aurigrave.org';
 
     const releases = await getReleases();
