@@ -20,6 +20,11 @@ import BackButton from '@/components/ui/button/blog/BackButton';
 import { getAnyBlog } from '@/lib/db/blog/admin';
 import LocalTime from '@/components/ui/LocalTime';
 
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+export const instant = false;
+
 export async function generateMetadata(
     { params }: { params: Promise<{ id: string }> },
     parent: ResolvingMetadata
@@ -60,7 +65,7 @@ export async function generateMetadata(
     };
 }
 
-async function BlogPostContent({ params }: { params: Promise<{ id: string }> }) {
+export default async function BlogPost({ params }: { params: Promise<{ id: string }> }) {
     const props = await params;
     let post;
     try { post = await getAnyBlog(props.id); }
@@ -124,12 +129,4 @@ async function BlogPostContent({ params }: { params: Promise<{ id: string }> }) 
             {post.content}
         </MarkdownAsync>
     </>;
-}
-
-export default function BlogPost({ params }: { params: Promise<{ id: string }> }) {
-    return (
-        <Suspense fallback={<Loading/>}>
-            <BlogPostContent params={params} />
-        </Suspense>
-    );
 }

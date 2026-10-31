@@ -4,6 +4,11 @@ import MainError from '@/components/layout/MainError';
 import BlogEditor from '@/components/layout/blog/editor/BlogEditor';
 import { getAnyBlog } from '@/lib/db/blog/admin';
 
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+export const instant = false;
+
 async function BlogEditorPageContent({ params }: { params: Promise<{ id: string }> }) {
     try { await requireAdmin(); }
     catch(err) {

@@ -10,6 +10,11 @@ import { ThemeProvider } from 'next-themes';
 import TransitionsEnabler from '@/components/misc/TransitionsEnabler';
 import { LINKTREE_LINKS } from '@/lib/const';
 
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+export const instant = false;
+
 const archivo = Archivo({ subsets: ['latin', 'latin-ext'], weight: 'variable', axes: ['wdth'], display:'swap' });
 
 export const metadata: Metadata = {

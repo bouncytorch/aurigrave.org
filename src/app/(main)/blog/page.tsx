@@ -8,29 +8,22 @@ import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getAllBlogs } from '@/lib/db/blog/admin';
 
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+export const instant = false;
+
 export const metadata: Metadata = { title: 'blog' };
 
 // TODO: Implement pagination
+// TODO: Fix hardcoded style here
 
-async function Posts() {
+export default async function Blog() {
     await connection();
     let posts;
     try { posts = await getAllBlogs(); }
     catch { posts = await getPublishedBlogs(); }
 
-    return <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-        {
-            posts.rows.map(({ showThumbnail, id, title, description, createdAt, tags }) => showThumbnail
-                ? <BlogPostWImage key={id} id={id} title={title} description={description} createdAt={createdAt} tags={tags} author='bouncytorch' />
-                : <BlogPost key={id} id={id} title={title} description={description} createdAt={createdAt} tags={tags} author='bouncytorch' />
-            )
-        }
-    </div>;
-}
-
-// TODO: Fix hardcoded style here
-
-export default function Blog() {
     return <main>
         <h1> BLOG </h1>
         <div style={{ marginBottom: '1em', display: 'flex', justifyContent: 'space-between' }}>
@@ -38,9 +31,13 @@ export default function Blog() {
                 <BlogEditButton />
             </Suspense>
         </div>
-        <Suspense fallback={ <Loading/> }>
-            <Posts />
-        </Suspense>
-
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {
+                posts.rows.map(({ showThumbnail, id, title, description, createdAt, tags }) => showThumbnail
+                    ? <BlogPostWImage key={id} id={id} title={title} description={description} createdAt={createdAt} tags={tags} author='bouncytorch' />
+                    : <BlogPost key={id} id={id} title={title} description={description} createdAt={createdAt} tags={tags} author='bouncytorch' />
+                )
+            }
+        </div>;
     </main>;
 }

@@ -1,4 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+export const instant = false;
+
 export default function HTML5TestPage() {
     return (
         <div id="top" role="document">
@@ -644,4 +649,4 @@ export default function HTML5TestPage() {
             </footer>
         </div>
     );
-};
+}

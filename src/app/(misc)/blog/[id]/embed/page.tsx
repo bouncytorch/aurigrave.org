@@ -5,6 +5,11 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getRelativeURL } from '@/lib/server/copyparty';
 
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+export const instant = false;
+
 async function OGContent({ params }: { params: Promise<{ id: string }> }) {
     const blog = await getPublicBlog((await params).id);
     if (!blog) notFound();

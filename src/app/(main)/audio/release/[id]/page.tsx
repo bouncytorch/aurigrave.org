@@ -13,6 +13,11 @@ import Markdown from 'react-markdown';
 import CoverImage from '@/components/ui/CoverImage';
 import { Suspense } from 'react';
 
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+export const instant = false;
+
 function getUrlBase(id: string, type: string | null, size: string) {
     if (type && type !== 'legacy') return `https://files.aurigrave.org/bouncytorch/Projects/previews/${type}/${id}/`;
     else return `https://files.aurigrave.org/bouncytorch/Projects/previews/other/${size}/${id}/`;
@@ -60,7 +65,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     else return notFound();
 }
 
-async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
+export default async function ReleasePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const release = (await getReleases()).find(v => v.id === id);
 
@@ -146,13 +151,5 @@ async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
                 </div>
             </div>
         </main>
-    );
-}
-
-export default function ReleasePage({ params }: { params: Promise<{ id: string }> }) {
-    return (
-        <Suspense fallback={<Loading/>}>
-            <ReleaseContent params={params} />
-        </Suspense>
     );
 }
