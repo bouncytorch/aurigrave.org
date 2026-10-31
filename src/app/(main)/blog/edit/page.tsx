@@ -1,10 +1,11 @@
-export const dynamic = 'force-dynamic';
-
+import { Suspense } from 'react';
 import { requireAdmin } from '@/lib/auth';
 import MainError from '@/components/layout/MainError';
 import BlogEditor from '@/components/layout/blog/editor/BlogEditor';
+import { connection } from 'next/server';
 
-export default async function PostEditor() {
+async function PostEditorContent() {
+    await connection();
     try { await requireAdmin(); }
     catch(err) {
         if (err instanceof Error && err.message === 'Unauthorized')
@@ -13,4 +14,12 @@ export default async function PostEditor() {
     }
 
     return <BlogEditor />;
+}
+
+export default function PostEditor() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <PostEditorContent />
+        </Suspense>
+    );
 }

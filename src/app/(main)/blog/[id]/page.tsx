@@ -1,7 +1,7 @@
-export const dynamic = 'force-dynamic';
-
+import Loading from '@/components/layout/Loading';
 import MainError from '@/components/layout/MainError';
 import { getPublicBlog } from '@/lib/db/blog/search';
+import { Suspense } from 'react';
 import { MarkdownAsync } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypePrettyCode from 'rehype-pretty-code';
@@ -60,7 +60,7 @@ export async function generateMetadata(
     };
 }
 
-export default async function BlogPost({ params }: { params: Promise<{ id: string }> }) {
+async function BlogPostContent({ params }: { params: Promise<{ id: string }> }) {
     const props = await params;
     let post;
     try { post = await getAnyBlog(props.id); }
@@ -124,4 +124,12 @@ export default async function BlogPost({ params }: { params: Promise<{ id: strin
             {post.content}
         </MarkdownAsync>
     </>;
+}
+
+export default function BlogPost({ params }: { params: Promise<{ id: string }> }) {
+    return (
+        <Suspense fallback={<Loading/>}>
+            <BlogPostContent params={params} />
+        </Suspense>
+    );
 }

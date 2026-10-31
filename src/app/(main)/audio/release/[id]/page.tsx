@@ -1,7 +1,6 @@
-export const dynamic = 'force-dynamic';
-
 import { getReleases } from '@/lib/db/releases';
 import { Metadata, ResolvingMetadata } from 'next';
+import Loading from '@/components/layout/Loading';
 
 import Linktree, { Link } from '@/components/layout/linktree/Linktree';
 import { faApple, faBandcamp, faSoundcloud, faSpotify, faYoutube } from '@fortawesome/free-brands-svg-icons';
@@ -12,6 +11,7 @@ import YouTubeFrame from '@/components/ui/frame/YouTubeFrame';
 import Markdown from 'react-markdown';
 
 import CoverImage from '@/components/ui/CoverImage';
+import { Suspense } from 'react';
 
 function getUrlBase(id: string, type: string | null, size: string) {
     if (type && type !== 'legacy') return `https://files.aurigrave.org/bouncytorch/Projects/previews/${type}/${id}/`;
@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     else return notFound();
 }
 
-export default async function ReleasePage({ params }: { params: Promise<{ id: string }> }) {
+async function ReleaseContent({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const release = (await getReleases()).find(v => v.id === id);
 
@@ -146,5 +146,13 @@ export default async function ReleasePage({ params }: { params: Promise<{ id: st
                 </div>
             </div>
         </main>
+    );
+}
+
+export default function ReleasePage({ params }: { params: Promise<{ id: string }> }) {
+    return (
+        <Suspense fallback={<Loading/>}>
+            <ReleaseContent params={params} />
+        </Suspense>
     );
 }

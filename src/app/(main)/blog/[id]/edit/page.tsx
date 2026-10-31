@@ -1,11 +1,10 @@
-export const dynamic = 'force-dynamic';
-
+import { Suspense } from 'react';
 import { requireAdmin } from '@/lib/auth';
 import MainError from '@/components/layout/MainError';
 import BlogEditor from '@/components/layout/blog/editor/BlogEditor';
 import { getAnyBlog } from '@/lib/db/blog/admin';
 
-export default async function PostEditor({ params }: { params: Promise<{ id: string }> }) {
+async function BlogEditorPageContent({ params }: { params: Promise<{ id: string }> }) {
     try { await requireAdmin(); }
     catch(err) {
         if (err instanceof Error && err.message === 'Unauthorized')
@@ -15,7 +14,7 @@ export default async function PostEditor({ params }: { params: Promise<{ id: str
 
     const post = await getAnyBlog((await params).id);
     if (!post) return <MainError />;
-    return <BlogEditor
+    else return <BlogEditor
         id={post.id}
         old_title={post.title}
         old_content={post.content}
@@ -26,4 +25,12 @@ export default async function PostEditor({ params }: { params: Promise<{ id: str
         old_thumbnail={post.showThumbnail}
         createdAt={post.createdAt}
     />;
+}
+
+export default function PostEditor({ params }: { params: Promise<{ id: string }> }) {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <BlogEditorPageContent params={params}  />
+        </Suspense>
+    );
 }

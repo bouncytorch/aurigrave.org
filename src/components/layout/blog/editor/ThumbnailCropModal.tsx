@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import ReactCrop, { type Crop, type PixelCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import Modal from '../../Modal';
@@ -45,13 +45,7 @@ function getCroppedFile(img: HTMLImageElement, crop: PixelCrop, originalFile: Fi
 
 export default function ThumbnailCropModal({ file, onConfirm, onCancel }: Props) {
     const imgRef    = useRef<HTMLImageElement>(null);
-    const [srcUrl]  = useState(() => URL.createObjectURL(file));
-
-    useEffect(() => {
-        return () => {
-            URL.revokeObjectURL(srcUrl);
-        };
-    }, [srcUrl]);
+    const srcUrl    = useRef(URL.createObjectURL(file));
 
     // Start with an 80 % centred selection so the user has something to drag
     const [crop,          setCrop]          = useState<Crop>({ unit: '%', x: 10, y: 10, width: 80, height: 80 });
@@ -63,6 +57,7 @@ export default function ThumbnailCropModal({ file, onConfirm, onCancel }: Props)
         setWorking(true);
         try {
             const cropped = await getCroppedFile(imgRef.current, completedCrop, file);
+            URL.revokeObjectURL(srcUrl.current);
             onConfirm(cropped);
         } catch (err) {
             alert(`Crop failed: ${String(err)}`);
@@ -72,6 +67,7 @@ export default function ThumbnailCropModal({ file, onConfirm, onCancel }: Props)
     }
 
     function handleCancel() {
+        URL.revokeObjectURL(srcUrl.current);
         onCancel();
     }
 
@@ -90,7 +86,7 @@ export default function ThumbnailCropModal({ file, onConfirm, onCancel }: Props)
                 {/*eslint-disable-next-line @next/next/no-img-element*/}
                 <img
                     ref={imgRef}
-                    src={srcUrl}
+                    src={srcUrl.current}
                     alt="Crop preview"
                     style={{ maxWidth: '80vw', maxHeight: '65vh', display: 'block' }}
                 />
