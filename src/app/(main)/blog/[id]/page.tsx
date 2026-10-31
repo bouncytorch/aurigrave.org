@@ -1,7 +1,5 @@
-import Loading from '@/components/layout/Loading';
 import MainError from '@/components/layout/MainError';
 import { getPublicBlog } from '@/lib/db/blog/search';
-import { Suspense } from 'react';
 import { MarkdownAsync } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypePrettyCode from 'rehype-pretty-code';
